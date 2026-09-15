@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Каталог аниме AniManga.SU — 18 472 тайтла: экшен, романтика, фэнтези, сёнэн, сэйнэн, повседневность, киберпанк, исекай. Смотрите онлайн в HD." />
+    <meta name="keywords" content="каталог аниме, аниме онлайн, экшен, романтика, фэнтези, сёнэн, сэйнэн, киберпанк, исекай, HD" />
+    <meta name="theme-color" content="#0b1120" />
+    <meta property="og:title" content="Каталог аниме | AniManga.SU" />
+    <meta property="og:description" content="Каталог аниме AniManga.SU — 18 472 тайтла с русским дубляжом и субтитрами. Фильтры по жанрам, сортировка по популярности." />
+    <meta property="og:image" content="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20catalog%20collage%20multiple%20characters%20hd&image_size=landscape_16_9" />
+    <meta property="og:type" content="website" />
+    <title>Каталог аниме | AniManga.SU — Онлайн, HD, Бесплатно</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #111827;
+            --bg-card: #1e293b;
+            --bg-card-hover: #263449;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #0ea5e9;
+            --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
+            --border-color: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .header {
+            background: rgba(11, 17, 32, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.3rem; }
+        .logo-mark { width: 38px; height: 38px; background: var(--accent-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3); }
+        .logo-text { letter-spacing: -0.3px; }
+        .accent { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; transition: all 0.2s ease; font-family: 'Rubik', sans-serif; }
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-card); }
+        .nav-link.active { color: white; background: var(--accent-gradient); box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35); }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-wrapper svg { position: absolute; left: 12px; color: var(--text-muted); }
+        .search-input { padding: 10px 38px 10px 38px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; width: 260px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; transition: border-color 0.2s; }
+        .search-input:focus { border-color: var(--accent-primary); }
+        .search-input::placeholder { color: var(--text-muted); }
+        .kbd-k { position: absolute; right: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; color: var(--text-muted); }
+        .btn-signin { padding: 10px 20px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Rubik', sans-serif; transition: all 0.2s; }
+        .btn-signin:hover { background: var(--accent-primary); border-color: var(--accent-primary); }
+        .theme-toggle { padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all 0.2s; }
+        .theme-toggle:hover { background: var(--bg-card-hover); }
+        .page-header { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); padding: 50px 0 40px; border-bottom: 1px solid var(--border-color); }
+        .page-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.8px; }
+        .page-breadcrumbs { color: var(--text-secondary); font-size: 0.9rem; }
+        .page-breadcrumbs a { color: var(--accent-secondary); text-decoration: none; }
+        .main-layout { display: grid; grid-template-columns: 280px 1fr; gap: 32px; padding: 40px 0; }
+        .filters-panel { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 24px; height: fit-content; position: sticky; top: 100px; }
+        .filters-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .filter-group { margin-bottom: 24px; }
+        .filter-group:last-child { margin-bottom: 0; }
+        .filter-label { font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: block; }
+        .checkbox-list { display: flex; flex-direction: column; gap: 10px; }
+        .checkbox-item { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 0.95rem; color: var(--text-primary); transition: color 0.15s; }
+        .checkbox-item:hover { color: var(--accent-secondary); }
+        .checkbox-item input { width: 16px; height: 16px; accent-color: var(--accent-primary); cursor: pointer; }
+        .checkbox-item .count { color: var(--text-muted); font-size: 0.8rem; margin-left: auto; }
+        .sort-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px; }
+        .sort-title { font-size: 1.25rem; font-weight: 700; }
+        .sort-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+        .chip { padding: 8px 16px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 999px; color: var(--text-secondary); font-size: 0.85rem; font-weight: 600; cursor: pointer; font-family: 'Nunito', sans-serif; transition: all 0.2s; }
+        .chip:hover { border-color: var(--accent-primary); color: var(--text-primary); }
+        .chip.active { background: var(--accent-gradient); border-color: transparent; color: white; box-shadow: 0 2px 10px rgba(124, 58, 237, 0.4); }
+        .anime-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 24px; }
+        .anime-card { background: var(--bg-card); border-radius: 14px; overflow: hidden; cursor: pointer; transition: all 0.3s ease; border: 1px solid transparent; }
+        .anime-card:hover { transform: translateY(-6px); border-color: var(--accent-primary); box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(124, 58, 237, 0.2); }
+        .anime-cover { aspect-ratio: 3 / 4; position: relative; overflow: hidden; background-size: cover; background-position: center; }
+        .anime-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7) 100%); }
+        .badge-ep { position: absolute; top: 10px; left: 10px; background: rgba(0, 0, 0, 0.75); backdrop-filter: blur(8px); padding: 5px 10px; border-radius: 7px; font-size: 0.78rem; font-weight: 700; z-index: 2; }
+        .badge-hd { position: absolute; top: 10px; right: 10px; background: var(--accent-gradient); padding: 5px 10px; border-radius: 7px; font-size: 0.75rem; font-weight: 800; z-index: 2; }
+        .badge-rating { position: absolute; bottom: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 4px 9px; border-radius: 6px; font-size: 0.8rem; font-weight: 700; color: var(--warning); z-index: 2; }
+        .anime-info { padding: 16px; }
+        .anime-info h4 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; line-height: 1.35; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 2.7em; }
+        .anime-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; font-size: 0.82rem; }
+        .rate { color: var(--warning); font-weight: 700; }
+        .genre { color: var(--text-muted); }
+        .anime-desc { font-size: 0.83rem; color: var(--text-secondary); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 60px 0 30px; margin-top: 40px; }
+        .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        .footer-inner h5 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+        .footer-inner ul { list-style: none; }
+        .footer-inner ul li { margin-bottom: 10px; }
+        .footer-inner ul li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-inner ul li a:hover { color: var(--accent-secondary); }
+        .footer-desc { color: var(--text-secondary); font-size: 0.9rem; margin-top: 14px; line-height: 1.6; max-width: 340px; }
+        .mb { margin-bottom: 12px; }
+        .socials { display: flex; gap: 10px; margin-top: 18px; }
+        .socials a { padding: 8px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; }
+        .socials a:hover { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--text-muted); font-size: 0.85rem; }
+        .ping { color: var(--success); font-weight: 700; }
+        .pagination { display: flex; justify-content: center; gap: 8px; margin-top: 40px; flex-wrap: wrap; }
+        .pagination button { padding: 10px 16px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .pagination button:hover:not(:disabled) { border-color: var(--accent-primary); color: var(--text-primary); }
+        .pagination button.active { background: var(--accent-gradient); color: white; border-color: transparent; }
+        .pagination button:disabled { opacity: 0.4; cursor: not-allowed; }
+        .year-select { width: 100%; padding: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-primary); font-family: 'Nunito', sans-serif; font-size: 0.9rem; cursor: pointer; outline: none; }
+        .year-select:focus { border-color: var(--accent-primary); }
+        .range-wrap { display: flex; align-items: center; gap: 10px; }
+        .range-wrap input[type=range] { flex: 1; accent-color: var(--accent-primary); }
+        .range-wrap .val { font-weight: 700; color: var(--accent-secondary); min-width: 36px; text-align: right; }
+        .apply-filters { width: 100%; padding: 12px; background: var(--accent-gradient); border: none; border-radius: 10px; color: white; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: 'Rubik', sans-serif; margin-top: 8px; transition: transform 0.2s, box-shadow 0.2s; }
+        .apply-filters:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(124, 58, 237, 0.35); }
+        @media (max-width: 1024px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .filters-panel { position: static; }
+            .nav.desktop { display: none; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .anime-grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+            .page-title { font-size: 1.8rem; }
+            .search-input { width: 160px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">AM</span>
+            <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+        </a>
+        <nav class="nav desktop">
+            <a href="projects.html" class="nav-link active">Каталог</a>
+            <a href="schedule.html" class="nav-link">Расписание</a>
+            <a href="manga.html" class="nav-link">Манга</a>
+            <a href="about.html" class="nav-link">О проекте</a>
+        </nav>
+        <div class="header-right">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input type="text" placeholder="Найти аниме..." class="search-input" />
+                <kbd class="kbd-k">⌘K</kbd>
+            </div>
+            <button class="btn-signin">Войти</button>
+            <button class="theme-toggle" title="Тема">🌙</button>
+        </div>
+    </div>
+</header>
+
+<section class="page-header">
+    <div class="container">
+        <div class="page-breadcrumbs"><a href="index.html">Главная</a> / Каталог аниме</div>
+        <h1 class="page-title">🎬 Каталог аниме</h1>
+        <p style="color: var(--text-secondary); max-width: 640px; margin-top: 8px;">18 472 тайтла с русским дубляжом и профессиональными субтитрами. Фильтруйте по жанрам, году выхода и рейтингу.</p>
+    </div>
+</section>
+
+<div class="container main-layout">
+    <aside class="filters-panel">
+        <div class="filters-title">🔧 Фильтры</div>
+
+        <div class="filter-group">
+            <label class="filter-label">Жанры</label>
+            <div class="checkbox-list">
+                <label class="checkbox-item" id="action"><input type="checkbox" checked> Экшен <span class="count">3 482</span></label>
+                <label class="checkbox-item" id="romance"><input type="checkbox"> Романтика <span class="count">2 941</span></label>
+                <label class="checkbox-item" id="fantasy"><input type="checkbox"> Фэнтези <span class="count">4 102</span></label>
+                <label class="checkbox-item" id="shonen"><input type="checkbox"> Сёнэн <span class="count">3 018</span></label>
+                <label class="checkbox-item" id="seinen"><input type="checkbox"> Сэйнэн <span class="count">1 674</span></label>
+                <label class="checkbox-item" id="slice"><input type="checkbox"> Повседневность <span class="count">982</span></label>
+                <label class="checkbox-item" id="cyberpunk"><input type="checkbox"> Киберпанк <span class="count">412</span></label>
+                <label class="checkbox-item" id="isekai"><input type="checkbox"> Исекай <span class="count">1 847</span></label>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">Год выхода</label>
+            <select class="year-select">
+                <option>Все года</option>
+                <option>2026</option>
+                <option selected>2024–2026</option>
+                <option>2023</option>
+                <option>2022</option>
+                <option>2020–2021</option>
+                <option>2010–2019</option>
+                <option>2000–2009</option>
+                <option>Ретро</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">Рейтинг от: <span style="float:right;color:var(--accent-secondary);">7.0+</span></label>
+            <div class="range-wrap">
+                <input type="range" min="0" max="10" value="7" step="0.5">
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">Тип</label>
+            <div class="checkbox-list">
+                <label class="checkbox-item"><input type="checkbox" checked> ТВ-сериал</label>
+                <label class="checkbox-item"><input type="checkbox"> Фильм</label>
+                <label class="checkbox-item"><input type="checkbox"> OVA/ONA</label>
+                <label class="checkbox-item"><input type="checkbox"> Спешл</label>
+            </div>
+        </div>
+
+        <div class="filter-group">
+            <label class="filter-label">Статус</label>
+            <div class="checkbox-list">
+                <label class="checkbox-item"><input type="checkbox" checked> В эфире</label>
+                <label class="checkbox-item"><input type="checkbox" checked> Завершён</label>
+                <label class="checkbox-item"><input type="checkbox"> Анонс</label>
+            </div>
+        </div>
+
+        <button class="apply-filters">Применить фильтры</button>
+    </aside>
+
+    <main>
+        <div class="sort-bar">
+            <div class="sort-title">Найдено: <span style="color:var(--accent-secondary);">12</span> тайтлов</div>
+            <div class="sort-controls">
+                <button class="chip active">🔥 Популярные</button>
+                <button class="chip">✨ Новинки</button>
+                <button class="chip">⭐ По рейтингу</button>
+                <button class="chip">📅 По году</button>
+            </div>
+        </div>
+
+        <div class="anime-grid">
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20key%20visual%20cyberpunk%20girl%20neon%20tokyo%20hd&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 8/12</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.3</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Неон: Дыхание Мегаполиса</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.3</span><span class="genre">Киберпанк, Экшен</span></div>
+                    <p class="anime-desc">В Токио 2089 года хакерши Рей обнаруживает секретный код, способный сломать систему контроля сознания корпорации «Син-Ниппон» и освободить миллионы людей.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20isekai%20fantasy%20castle%20elf%20boy%20magic%20hd&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 15/24</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 8.9</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Хроники Забытого Королевства</h4>
+                    <div class="anime-meta"><span class="rate">★ 8.9</span><span class="genre">Исекай, Фэнтези</span></div>
+                    <p class="anime-desc">Студент-историк Кейто попадает в мир Эльдарион, где магия реальна, а его знания о стратегии делают его ключевой фигурой в борьбе за трон древнего королевства.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20romance%20cherry%20blossom%20school%20uniform%20hd&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 12/12 ✅</div>
+                    <div class="badge-hd">2160p</div>
+                    <div class="badge-rating">★ 8.7</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Сакура под окном класса</h4>
+                    <div class="anime-meta"><span class="rate">★ 8.7</span><span class="genre">Романтика, Повседневность</span></div>
+                    <p class="anime-desc">Старшеклассница Аои случайно встречает тихого transfer student Рику под цветущей сакурой. Два хрупких мира постепенно сплетаются в историю о первой любви.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20shonen%20sword%20fight%20fire%20demon%20hd&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 6/24</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.1</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Последний Меч Пылающего Дракона</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.1</span><span class="genre">Сёнэн, Экшен</span></div>
+                    <p class="anime-desc">Юный воин Тайга наследует меч, заключавший душу древнего дракона. Чтобы спасти сестру, он вступает в орден охотников на демонов и сражается в легендарной турнире.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=dark%20fantasy%20anime%20male%20knight%20sword%20purple%20fire%20dramatic%20cover&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 9/12</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.4</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Тени Вечных Королей</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.4</span><span class="genre">Фэнтези, Сэйнэн</span></div>
+                    <p class="anime-desc">Король-отступник ведёт семерых предателей в поход против собственной империи. Интриги, предательство и философские вопросы о справедливости войны.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20detective%20rainy%20tokyo%20street%20neon%20noir%20cover&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 10/12</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.5</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Психолог Детективного Бюро 7</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.5</span><span class="genre">Сэйнэн, Детектив</span></div>
+                    <p class="anime-desc">Бывший профайлер ФБР Рэндзин расследует серию «идеальных преступлений» в Токио. Каждое дело раскрывает новые грани человеческой природы и тени прошлого.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=giant%20mecha%20robot%20city%20explosion%20space%20anime%20cover&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 3/26</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.0</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Операция Iron-Mk7: Восстание</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.0</span><span class="genre">Меха, Экшен</span></div>
+                    <p class="anime-desc">Год 2147. Колонии Марса восстают против Земли. Тринадцатилетний пилот Кай случайно оказывается за штурвалом прототипа меха, решающего исход войны.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=magic%20isekai%20wizard%20boy%20floating%20islands%20anime%20cover&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 18/?</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 8.8</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Волшебник Другого Мира</h4>
+                    <div class="anime-meta"><span class="rate">★ 8.8</span><span class="genre">Исекай, Фэнтези</span></div>
+                    <p class="anime-desc">Офисный работник умирает от переработки и перерождается в волшебника в летающих островах. Его неудержимое желание «работать поменьше» приводит к комическим последствиям.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=ninja%20anime%20battle%20forest%20shuriken%20dynamic%20cover&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 22/24</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.2</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Клана Трёх Листьев</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.2</span><span class="genre">Сёнэн, Экшен</span></div>
+                    <p class="anime-desc">Продолжение легендарной саги о ниндзя. Новое поколение воинов защищает деревню от загадочного клана теней, владеющего древними печатями демонов.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20slice%20of%20life%20cafe%20barista%20warm%20coffee%20rainy%20day&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 5/12</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 8.5</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Кофейня на углу Ветра</h4>
+                    <div class="anime-meta"><span class="rate">★ 8.5</span><span class="genre">Повседневность</span></div>
+                    <p class="anime-desc">Студентка Иori подрабатывает бариста в маленькой кофейне, где постоянно заходит разнообразные посетители — каждый со своей историей, мечтами и потерями.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20cyberpunk%20police%20officer%20gun%20futuristic%20city%20night%20hd&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 1/12 🆕</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 8.3</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Отдел Киберпреступлений 09</h4>
+                    <div class="anime-meta"><span class="rate">★ 8.3</span><span class="genre">Киберпанк, Сэйнэн</span></div>
+                    <p class="anime-desc">Спецподразделение полиции Токио-2099 расследует дела, связанные с имплантами. Каждая серия — отдельное дело, раскрывающее тёмную сторону технологий будущего.</p>
+                </div>
+            </article>
+
+            <article class="anime-card">
+                <div class="anime-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20romance%20fantasy%20princess%20knight%20cherry%20blossom%20castle%20hd&image_size=portrait_4_3')">
+                    <div class="badge-ep">Эп. 14/24</div>
+                    <div class="badge-hd">1080p</div>
+                    <div class="badge-rating">★ 9.0</div>
+                </div>
+                <div class="anime-info">
+                    <h4>Принцесса и Бессмертный Рыцарь</h4>
+                    <div class="anime-meta"><span class="rate">★ 9.0</span><span class="genre">Фэнтези, Романтика</span></div>
+                    <p class="anime-desc">Двенадцатая принцесса империи заключает контракт с рыцарем, живущим уже 300 лет. Вместе они раскрывают заговор против короны и учатся доверять друг другу.</p>
+                </div>
+            </article>
+        </div>
+
+        <div class="pagination">
+            <button disabled>← Назад</button>
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+            <button>...</button>
+            <button>1539</button>
+            <button>Вперёд →</button>
+        </div>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div>
+            <div class="logo mb">
+                <span class="logo-mark">AM</span>
+                <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+            </div>
+            <p class="footer-desc">© 2019–2026 AniManga.SU. Все права на тайтлы и материалы принадлежат их правообладателям. Сайт носит исключительно информационный характер.</p>
+            <div class="socials">
+                <a href="https://t.me/animangasu" title="Telegram">✈️ TG</a>
+                <a href="https://discord.gg/animangasu" title="Discord">💬 DS</a>
+                <a href="https://vk.com/animangasu" title="VK">🐶 VK</a>
+                <a href="https://youtube.com/@animangasu" title="YouTube">▶️ YT</a>
+            </div>
+        </div>
+        <div>
+            <h5>Разделы</h5>
+            <ul>
+                <li><a href="projects.html">Каталог аниме</a></li>
+                <li><a href="manga.html">Манга и ранобэ</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="projects.html#top">Топы и рейтинги</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Проекты</h5>
+            <ul>
+                <li><a href="projects.html#season2026">Сезон 2026</a></li>
+                <li><a href="projects.html#top100">Топ 100 аниме</a></li>
+                <li><a href="manga.html#popular">Популярная манга</a></li>
+                <li><a href="schedule.html#today">Сегодня в эфире</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Инфо</h5>
+            <ul>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="copyright.html">Правообладателям</a></li>
+                <li><a href="tos.html">Пользовательское соглашение</a></li>
+                <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                <li><a href="mailto:support@animanga.su">Поддержка: support@animanga.su</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer-bottom">
+            <span>🖥️ Серверы распределены: MSK · SPB · KZN · KGD · EKB</span>
+            <span>Ping до вашего CDN: <b class="ping">12 мс</b></span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

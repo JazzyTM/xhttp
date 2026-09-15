@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Расписание выхода новых эпизодов аниме на AniManga.SU. Каждый день недели: Пн, Вт, Ср, Чт, Пт, Сб, Вс. Время МСК." />
+    <meta name="keywords" content="расписание аниме, выход серий, новые эпизоды, график выхода, МСК, АниМанга" />
+    <meta name="theme-color" content="#0b1120" />
+    <meta property="og:title" content="Расписание выхода аниме | AniManga.SU" />
+    <meta property="og:description" content="Расписание выхода новых серий по дням недели. Время МСК. Подсветка «сегодня выходит»." />
+    <meta property="og:image" content="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20schedule%20calendar%20japanese%20hd&image_size=landscape_16_9" />
+    <meta property="og:type" content="website" />
+    <title>Расписание выхода новых серий | AniManga.SU</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #111827;
+            --bg-card: #1e293b;
+            --bg-card-hover: #263449;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #0ea5e9;
+            --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
+            --border-color: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+        .header {
+            background: rgba(11, 17, 32, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky; top: 0; z-index: 100;
+        }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.3rem; }
+        .logo-mark { width: 38px; height: 38px; background: var(--accent-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3); }
+        .logo-text { letter-spacing: -0.3px; }
+        .accent { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; transition: all 0.2s ease; font-family: 'Rubik', sans-serif; }
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-card); }
+        .nav-link.active { color: white; background: var(--accent-gradient); box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35); }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-wrapper svg { position: absolute; left: 12px; color: var(--text-muted); }
+        .search-input { padding: 10px 38px 10px 38px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; width: 260px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; transition: border-color 0.2s; }
+        .search-input:focus { border-color: var(--accent-primary); }
+        .search-input::placeholder { color: var(--text-muted); }
+        .kbd-k { position: absolute; right: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; color: var(--text-muted); }
+        .btn-signin { padding: 10px 20px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Rubik', sans-serif; transition: all 0.2s; }
+        .btn-signin:hover { background: var(--accent-primary); border-color: var(--accent-primary); }
+        .theme-toggle { padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 1rem; transition: all 0.2s; }
+        .theme-toggle:hover { background: var(--bg-card-hover); }
+        .page-header { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); padding: 50px 0 40px; border-bottom: 1px solid var(--border-color); }
+        .page-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.8px; }
+        .page-breadcrumbs { color: var(--text-secondary); font-size: 0.9rem; }
+        .page-breadcrumbs a { color: var(--accent-secondary); text-decoration: none; }
+        .content { padding: 40px 0; }
+        .week-tabs { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; margin-bottom: 36px; }
+        .day-tab {
+            padding: 16px 10px; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; text-align: center; cursor: pointer; transition: all 0.25s;
+        }
+        .day-tab:hover { border-color: var(--accent-primary); transform: translateY(-2px); }
+        .day-tab .tab-day { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 700; }
+        .day-tab .tab-name { font-size: 1.05rem; font-weight: 700; margin-top: 4px; font-family: 'Rubik', sans-serif; }
+        .day-tab .tab-count { font-size: 0.8rem; color: var(--accent-secondary); margin-top: 4px; font-weight: 700; }
+        .day-tab.active {
+            background: var(--accent-gradient); border-color: transparent;
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.35);
+        }
+        .day-tab.active .tab-day, .day-tab.active .tab-count { color: rgba(255,255,255,0.85); }
+        .day-tab.active .tab-name { color: white; }
+        .day-tab.today { position: relative; border-color: var(--warning); }
+        .today-mark {
+            position: absolute; top: -10px; right: -8px; background: var(--warning); color: #1a1a1a;
+            padding: 3px 10px; border-radius: 999px; font-size: 0.7rem; font-weight: 800;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100% { transform: scale(1);} 50% { transform: scale(1.06);} }
+        .day-section { margin-bottom: 48px; }
+        .day-heading {
+            display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+            padding-bottom: 14px; border-bottom: 1px solid var(--border-color);
+        }
+        .day-badge {
+            width: 64px; height: 64px; background: var(--bg-card); border-radius: 14px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 1px solid var(--border-color);
+        }
+        .day-badge .short { font-weight: 800; font-size: 1.1rem; font-family: 'Rubik', sans-serif; }
+        .day-badge .count { font-size: 0.7rem; color: var(--accent-secondary); font-weight: 700; }
+        .day-heading h2 { font-size: 1.6rem; }
+        .day-heading .today-tag {
+            padding: 4px 12px; background: var(--warning); color: #1a1a1a; border-radius: 999px;
+            font-size: 0.75rem; font-weight: 800;
+        }
+        .schedule-list-col { display: flex; flex-direction: column; gap: 12px; }
+        .schedule-item {
+            display: grid; grid-template-columns: 100px 80px 1fr auto; gap: 20px;
+            align-items: center; padding: 16px; background: var(--bg-card);
+            border: 1px solid var(--border-color); border-radius: 14px; transition: all 0.2s;
+        }
+        .schedule-item:hover { border-color: var(--accent-primary); background: var(--bg-card-hover); transform: translateX(4px); }
+        .schedule-item.today-item {
+            border-color: var(--warning);
+            box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.15), 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .sched-time {
+            font-family: 'Rubik', sans-serif; font-weight: 800; font-size: 1.35rem;
+            text-align: center; background: var(--bg-secondary); border-radius: 10px;
+            padding: 8px 0; border: 1px solid var(--border-color);
+        }
+        .sched-time.current { background: var(--accent-gradient); color: white; border-color: transparent; }
+        .sched-cover {
+            width: 64px; height: 90px; border-radius: 8px; background-size: cover;
+            background-position: center; position: relative; overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+        .sched-cover::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6) 100%); }
+        .sched-main { min-width: 0; }
+        .sched-title { font-weight: 700; font-size: 1.02rem; margin-bottom: 6px; font-family: 'Rubik', sans-serif; }
+        .sched-title .live-dot {
+            display: inline-block; width: 8px; height: 8px; background: var(--success); border-radius: 50%;
+            margin-right: 8px; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+            animation: blink 1.2s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0.4;} }
+        .sched-meta { display: flex; gap: 14px; flex-wrap: wrap; font-size: 0.82rem; color: var(--text-secondary); }
+        .sched-meta .ep-num { background: var(--bg-secondary); padding: 2px 10px; border-radius: 6px; font-weight: 700; color: var(--accent-secondary); }
+        .sched-meta .ep-num.next-ep { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .sched-right { text-align: right; min-width: 140px; }
+        .status-badge {
+            display: inline-block; padding: 5px 12px; border-radius: 999px;
+            font-size: 0.75rem; font-weight: 700; margin-bottom: 8px;
+        }
+        .status-airing { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+        .status-announce { background: rgba(14, 165, 233, 0.15); color: var(--accent-secondary); }
+        .status-finished { background: rgba(100, 116, 139, 0.25); color: var(--text-muted); }
+        .sched-rate { color: var(--warning); font-weight: 700; font-size: 0.9rem; }
+        .sched-genre { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; }
+        .legend {
+            display: flex; gap: 16px; flex-wrap: wrap; padding: 16px;
+            background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 12px; margin-bottom: 32px; font-size: 0.85rem; color: var(--text-secondary);
+        }
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .legend-dot { width: 12px; height: 12px; border-radius: 50%; }
+        .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 60px 0 30px; margin-top: 40px; }
+        .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        .footer-inner h5 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+        .footer-inner ul { list-style: none; }
+        .footer-inner ul li { margin-bottom: 10px; }
+        .footer-inner ul li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-inner ul li a:hover { color: var(--accent-secondary); }
+        .footer-desc { color: var(--text-secondary); font-size: 0.9rem; margin-top: 14px; line-height: 1.6; max-width: 340px; }
+        .mb { margin-bottom: 12px; }
+        .socials { display: flex; gap: 10px; margin-top: 18px; }
+        .socials a { padding: 8px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; }
+        .socials a:hover { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--text-muted); font-size: 0.85rem; }
+        .ping { color: var(--success); font-weight: 700; }
+        @media (max-width: 1024px) {
+            .week-tabs { grid-template-columns: repeat(4, 1fr); }
+            .schedule-item { grid-template-columns: 70px 64px 1fr; gap: 12px; }
+            .sched-right { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; border-top: 1px dashed var(--border-color); padding-top: 10px; text-align: left; }
+            .nav.desktop { display: none; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 640px) {
+            .week-tabs { grid-template-columns: repeat(2, 1fr); }
+            .sched-time { font-size: 1rem; }
+            .page-title { font-size: 1.8rem; }
+            .search-input { width: 160px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">AM</span>
+            <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+        </a>
+        <nav class="nav desktop">
+            <a href="projects.html" class="nav-link">Каталог</a>
+            <a href="schedule.html" class="nav-link active">Расписание</a>
+            <a href="manga.html" class="nav-link">Манга</a>
+            <a href="about.html" class="nav-link">О проекте</a>
+        </nav>
+        <div class="header-right">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input type="text" placeholder="Найти тайтл в расписании..." class="search-input" />
+                <kbd class="kbd-k">⌘K</kbd>
+            </div>
+            <button class="btn-signin">Войти</button>
+            <button class="theme-toggle" title="Тема">🌙</button>
+        </div>
+    </div>
+</header>
+
+<section class="page-header">
+    <div class="container">
+        <div class="page-breadcrumbs"><a href="index.html">Главная</a> / Расписание</div>
+        <h1 class="page-title">📅 Расписание выхода новых серий</h1>
+        <p style="color: var(--text-secondary); max-width: 640px; margin-top: 8px;">Время указано по Москве (МСК / UTC+3). Подпишитесь на уведомления в Telegram, чтобы не пропустить новые серии.</p>
+    </div>
+</section>
+
+<div class="container content">
+    <div class="legend">
+        <div class="legend-item"><span class="legend-dot" style="background: var(--success)"></span> В эфире — идёт показ</div>
+        <div class="legend-item"><span class="legend-dot" style="background: var(--accent-secondary)"></span> Анонс — скоро выход</div>
+        <div class="legend-item"><span class="legend-dot" style="background: var(--text-muted)"></span> Завершён — все серии</div>
+        <div class="legend-item"><span class="legend-dot" style="background: var(--warning); animation: pulse 2s infinite;"></span> Сегодня выходит</div>
+    </div>
+
+    <div class="week-tabs">
+        <div class="day-tab"><div class="tab-day">ПН</div><div class="tab-name">Понедельник</div><div class="tab-count">5 тайтлов</div></div>
+        <div class="day-tab today active" id="today"><div class="today-mark">СЕГОДНЯ</div><div class="tab-day">ВТ</div><div class="tab-name">Вторник</div><div class="tab-count">6 тайтлов</div></div>
+        <div class="day-tab"><div class="tab-day">СР</div><div class="tab-name">Среда</div><div class="tab-count">5 тайтлов</div></div>
+        <div class="day-tab"><div class="tab-day">ЧТ</div><div class="tab-name">Четверг</div><div class="tab-count">5 тайтлов</div></div>
+        <div class="day-tab"><div class="tab-day">ПТ</div><div class="tab-name">Пятница</div><div class="tab-count">6 тайтлов</div></div>
+        <div class="day-tab"><div class="tab-day">СБ</div><div class="tab-name">Суббота</div><div class="tab-count">5 тайтлов</div></div>
+        <div class="day-tab"><div class="tab-day">ВС</div><div class="tab-name">Воскресенье</div><div class="tab-count">5 тайтлов</div></div>
+    </div>
+
+    <!-- ПОНЕДЕЛЬНИК -->
+    <section class="day-section" id="monday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">ПН</div><div class="count">5 шт</div></div>
+            <h2>Понедельник</h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item">
+                <div class="sched-time">12:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=seven%20samurai%20anime%20revenge%20fantasy%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Месть Семи Путей</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 2 · Эп. 8</span><span class="ep-num next-ep">Следующая: Эп. 9</span><span>Студия: Sunrise Edge</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.1</div><div class="sched-genre">Экшен, Фэнтези</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">15:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20albion%20fate%20knight%20medieval%20castle%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Судьба Альбиона</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 11</span><span class="ep-num next-ep">Следующая: Эп. 12 финал</span><span>Студия: White Orchid</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.9</div><div class="sched-genre">Фэнтези, Романтика</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">18:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20fire%20call%20magic%20phoenix%20battle%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Зов Огня</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 3 · Эп. 4</span><span class="ep-num next-ep">Следующая: Эп. 5</span><span>Студия: Flame Works</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.3</div><div class="sched-genre">Сёнэн, Экшен</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">20:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20school%20music%20club%20drama%20cherry%20blossom&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Ноты Первого Класса</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 7</span><span class="ep-num next-ep">Следующая: Эп. 8</span><span>Студия: A-1 Classic</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.4</div><div class="sched-genre">Повседневность, Музыка</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">23:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20moon%20rain%20july%20noir%20detective%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Луна Июльских Дождей</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 3</span><span class="ep-num next-ep">Следующая: Эп. 4</span><span>Студия: Twilight Art</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.8</div><div class="sched-genre">Сэйнэн, Детектив</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВТОРНИК / СЕГОДНЯ -->
+    <section class="day-section" id="tuesday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">ВТ</div><div class="count">6 шт</div></div>
+            <h2>Вторник <span class="today-tag">СЕГОДНЯ</span></h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item today-item">
+                <div class="sched-time current">10:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20key%20visual%20cyberpunk%20girl%20neon%20tokyo%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title"><span class="live-dot"></span>Неон: Дыхание Мегаполиса</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 8 (посл.)</span><span class="ep-num next-ep">НОВАЯ СЕРИЯ СЕЙЧАС</span><span>Студия: CyberPulse</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● СЕГОДНЯ В ЭФИРЕ</span><div class="sched-rate">★ 9.3</div><div class="sched-genre">Киберпанк, Экшен</div></div>
+            </div>
+            <div class="schedule-item today-item">
+                <div class="sched-time current">13:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=ninja%20anime%20battle%20forest%20shuriken%20dynamic%20cover&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title"><span class="live-dot"></span>Клана Трёх Листьев</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 3 · Эп. 22 (посл.)</span><span class="ep-num next-ep">Сейчас выходит</span><span>Студия: Jump Animation</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● СЕГОДНЯ В ЭФИРЕ</span><div class="sched-rate">★ 9.2</div><div class="sched-genre">Сёнэн, Экшен</div></div>
+            </div>
+            <div class="schedule-item today-item">
+                <div class="sched-time">16:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20slice%20of%20life%20cafe%20barista%20warm%20coffee%20rainy%20day&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Кофейня на углу Ветра</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 5</span><span class="ep-num next-ep">Сегодня в 16:00</span><span>Студия: Cozy Works</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● Сегодня выходит</span><div class="sched-rate">★ 8.5</div><div class="sched-genre">Повседневность</div></div>
+            </div>
+            <div class="schedule-item today-item">
+                <div class="sched-time">19:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20isekai%20fantasy%20castle%20elf%20boy%20magic%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Хроники Забытого Королевства</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 15</span><span class="ep-num next-ep">Сегодня в 19:00</span><span>Студия: Isekai Factory</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● Сегодня выходит</span><div class="sched-rate">★ 8.9</div><div class="sched-genre">Исекай, Фэнтези</div></div>
+            </div>
+            <div class="schedule-item today-item">
+                <div class="sched-time">21:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20romance%20fantasy%20princess%20knight%20cherry%20blossom%20castle%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Принцесса и Бессмертный Рыцарь</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 14</span><span class="ep-num next-ep">Сегодня в 21:30</span><span>Студия: Royal Arts</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● Сегодня выходит</span><div class="sched-rate">★ 9.0</div><div class="sched-genre">Фэнтези, Романтика</div></div>
+            </div>
+            <div class="schedule-item today-item">
+                <div class="sched-time">23:59</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20horror%20ghost%20school%20mystery%20dark%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Школа За Зеркалом</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 2</span><span class="ep-num next-ep">Сегодня в 23:59</span><span>Студия: Midnight Horror</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● Сегодня выходит</span><div class="sched-rate">★ 8.6</div><div class="sched-genre">Ужасы, Мистика</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СРЕДА -->
+    <section class="day-section" id="wednesday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">СР</div><div class="count">5 шт</div></div>
+            <h2>Среда</h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item">
+                <div class="sched-time">11:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=dark%20fantasy%20anime%20male%20knight%20sword%20purple%20fire%20dramatic%20cover&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Тени Вечных Королей</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 2 · Эп. 9</span><span>Студия: Dark Realm</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.4</div><div class="sched-genre">Фэнтези, Сэйнэн</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">14:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=magic%20isekai%20wizard%20boy%20floating%20islands%20anime%20cover&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Волшебник Другого Мира</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 18</span><span>Студия: Lazy Magic</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.8</div><div class="sched-genre">Исекай, Комедия</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">17:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=giant%20mecha%20robot%20city%20explosion%20space%20anime%20cover&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Операция Iron-Mk7: Восстание</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 3</span><span>Студия: Heavy Mecha</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.0</div><div class="sched-genre">Меха, Экшен</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">20:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20romance%20cherry%20blossom%20school%20uniform%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Сакура под окном класса</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 12</span><span>Студия: Spring Petal</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-finished">✓ Завершён</span><div class="sched-rate">★ 8.7</div><div class="sched-genre">Романтика</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">22:45</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20space%20opera%20stars%20battleship%20epic%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Эскадра Бессмертных Звёзд</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 4 · Эп. 1</span><span>Студия: Sky Frontier</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-announce">✦ Анонс</span><div class="sched-rate">★ 9.5 (S3)</div><div class="sched-genre">Космическая опера</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ЧЕТВЕРГ -->
+    <section class="day-section" id="thursday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">ЧТ</div><div class="count">5 шт</div></div>
+            <h2>Четверг</h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item">
+                <div class="sched-time">09:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20kids%20adventure%20island%20treasure%20map%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Пиратское Братство Детей</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 28</span><span>Студия: Kids World</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.0</div><div class="sched-genre">Приключения, 6+</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">13:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20shonen%20sword%20fight%20fire%20demon%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Последний Меч Пылающего Дракона</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 6</span><span>Студия: Dragon Blade</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.1</div><div class="sched-genre">Сёнэн, Экшен</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">16:45</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20cooking%20chef%20kitchen%20delicious%20food%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Закуски Улицы Фонарей</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 2 · Эп. 5</span><span>Студия: Foodie Arts</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.6</div><div class="sched-genre">Повседневность, Кулинария</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">19:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20cyberpunk%20police%20officer%20gun%20futuristic%20city%20night%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Отдел Киберпреступлений 09</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 2</span><span>Студия: Neon Noir</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.3</div><div class="sched-genre">Киберпанк, Сэйнэн</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">22:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20time%20leap%20school%20girl%20clock%20magic%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Часы, Что Помнят Всё</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 1</span><span>Студия: Time Loop</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-announce">✦ Премьера</span><div class="sched-rate">★ —</div><div class="sched-genre">Фэнтези, Драма</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ПЯТНИЦА -->
+    <section class="day-section" id="friday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">ПТ</div><div class="count">6 шт</div></div>
+            <h2>Пятница</h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item">
+                <div class="sched-time">11:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20sports%20basketball%20team%20jump%20shoot%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Баскетбол Золотого Зала</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 2 · Эп. 8</span><span>Студия: Sports Dynamix</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.9</div><div class="sched-genre">Спорт, Сёнэн</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">14:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20detective%20rainy%20tokyo%20street%20neon%20noir%20cover&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Психолог Детективного Бюро 7</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 11</span><span>Студия: Noir Logic</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.5</div><div class="sched-genre">Сэйнэн, Детектив</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">17:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20escher%20stars%20magic%20surreal%20dream%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Звёзды Эшеры</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 6</span><span>Студия: Surreal Dream</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.0</div><div class="sched-genre">Фэнтези, Сюрреализм</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">20:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=sakura%20anime%20school%20romance%20girl%20sunset%20soft%20pastel%20cover&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Весёлая Мелодия Школы</div>
+                    <div class="sched-meta"><span class="ep-num">OVA · Эп. 1</span><span>Студия: High Note</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-finished">✓ Завершён</span><div class="sched-rate">★ 8.7</div><div class="sched-genre">Романтика, Музыка</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">22:15</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20yakuza%20gangster%20tokyo%20night%20tattoo%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Клан Белой Змеи</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 7</span><span>Студия: Crime Tale</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.8</div><div class="sched-genre">Сэйнэн, Криминал</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">23:45</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20vampire%20gothic%20castle%20night%20moon%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Нотр-Дам Кровавой Розы</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 1</span><span>Студия: Gothic Rose</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-announce">✦ Премьера</span><div class="sched-rate">★ —</div><div class="sched-genre">Вампиры, Готика</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- СУББОТА -->
+    <section class="day-section" id="saturday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">СБ</div><div class="count">5 шт</div></div>
+            <h2>Суббота</h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item">
+                <div class="sched-time">10:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20big%20bang%20matrix%20sci%20fi%20neural%20network%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Big-Bang Матрица</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 3 · Эп. 1</span><span>Студия: Deep Mind</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.4</div><div class="sched-genre">Научная фантастика</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">13:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20sea%20white%20seagulls%20summer%20beach%20romance&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Море Белых Чаек</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 2 · Эп. 8</span><span>Студия: Summer Breeze</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.5</div><div class="sched-genre">Повседневность, Романтика</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">16:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20idol%20girls%20stage%20concert%20lights%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Проект: Звёздные Девы</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 5 · Эп. 14</span><span>Студия: Idol Factory</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.7</div><div class="sched-genre">Музыка, Айдолы</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">19:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20swordsman%20duo%20royal%20palace%20duel%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Королевский Дуэт Мечников</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 5</span><span>Студия: Twin Blades</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.1</div><div class="sched-genre">Фэнтези, Экшен</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">22:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20gundam%20mecha%20war%20epic%20space%20colony&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Хроники Войны Мобильных Доспехов</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 1</span><span>Студия: Sunrise Heavy</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-announce">✦ Спешл 90 мин</span><div class="sched-rate">★ —</div><div class="sched-genre">Меха, Война</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ВОСКРЕСЕНЬЕ -->
+    <section class="day-section" id="sunday">
+        <div class="day-heading">
+            <div class="day-badge"><div class="short">ВС</div><div class="count">5 шт</div></div>
+            <h2>Воскресенье</h2>
+        </div>
+        <div class="schedule-list-col">
+            <div class="schedule-item">
+                <div class="sched-time">09:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20gamer%20vrmmo%20sword%20fantasy%20world%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Легенда О Безумном Геймере</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 4 · Эп. 3</span><span>Студия: VR World</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.2</div><div class="sched-genre">Исекай, Геймеры</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">12:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20cute%20cats%20cafe%20kawaii%20pastel%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Котокафе Нянь и Мяу</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 21</span><span>Студия: Kawaii House</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 8.2</div><div class="sched-genre">Комедия, Повседневность</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">15:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20samurai%20edo%20period%20battle%20sunset%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Самурай Без Хозяина</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 10</span><span>Студия: Edo Films</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.3</div><div class="sched-genre">Исторический, Экшен</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">18:30</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20dragon%20tamer%20fantasy%20rider%20sky%20clouds%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Драконья Орда Последнего Повелителя</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 2 · Эп. 12 финал</span><span>Студия: Dragonheart</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● Финал сезона</span><div class="sched-rate">★ 9.0</div><div class="sched-genre">Фэнтези, Экшен</div></div>
+            </div>
+            <div class="schedule-item">
+                <div class="sched-time">21:00</div>
+                <div class="sched-cover" style="background-image:url('https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20mystery%20library%20books%20magic%2ancient%20hd&image_size=portrait_4_3')"></div>
+                <div class="sched-main">
+                    <div class="sched-title">Библиотека Вечных Книг</div>
+                    <div class="sched-meta"><span class="ep-num">Сезон 1 · Эп. 9</span><span>Студия: Ancient Pages</span></div>
+                </div>
+                <div class="sched-right"><span class="status-badge status-airing">● В эфире</span><div class="sched-rate">★ 9.2</div><div class="sched-genre">Мистика, Фэнтези</div></div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div>
+            <div class="logo mb">
+                <span class="logo-mark">AM</span>
+                <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+            </div>
+            <p class="footer-desc">© 2019–2026 AniManga.SU. Все права на тайтлы и материалы принадлежат их правообладателям. Сайт носит исключительно информационный характер.</p>
+            <div class="socials">
+                <a href="https://t.me/animangasu" title="Telegram">✈️ TG</a>
+                <a href="https://discord.gg/animangasu" title="Discord">💬 DS</a>
+                <a href="https://vk.com/animangasu" title="VK">🐶 VK</a>
+                <a href="https://youtube.com/@animangasu" title="YouTube">▶️ YT</a>
+            </div>
+        </div>
+        <div>
+            <h5>Разделы</h5>
+            <ul>
+                <li><a href="projects.html">Каталог аниме</a></li>
+                <li><a href="manga.html">Манга и ранобэ</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="projects.html#top">Топы и рейтинги</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Проекты</h5>
+            <ul>
+                <li><a href="projects.html#season2026">Сезон 2026</a></li>
+                <li><a href="projects.html#top100">Топ 100 аниме</a></li>
+                <li><a href="manga.html#popular">Популярная манга</a></li>
+                <li><a href="schedule.html#today">Сегодня в эфире</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Инфо</h5>
+            <ul>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="copyright.html">Правообладателям</a></li>
+                <li><a href="tos.html">Пользовательское соглашение</a></li>
+                <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                <li><a href="mailto:support@animanga.su">Поддержка: support@animanga.su</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer-bottom">
+            <span>🖥️ Серверы распределены: MSK · SPB · KZN · KGD · EKB</span>
+            <span>Ping до вашего CDN: <b class="ping">12 мс</b></span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

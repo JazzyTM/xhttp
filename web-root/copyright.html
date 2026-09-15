@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Правообладателям AniManga.SU — порядок подачи уведомлений о нарушении авторских прав, DMCA-подобная процедура, удаление контента, официальное партнёрство." />
+    <meta name="keywords" content="правообладателям, авторские права, DMCA, удаление контента, уведомление о нарушении, copyright animanga, partners" />
+    <meta name="theme-color" content="#0b1120" />
+    <meta property="og:title" content="Правообладателям | AniManga.SU" />
+    <meta property="og:description" content="Порядок подачи уведомлений о нарушении авторских прав. Мы рассматриваем все обращения в течение 24 часов." />
+    <meta property="og:image" content="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=law%20copyright%20justice%20books%20gavel%20library%20hd&image_size=landscape_16_9" />
+    <meta property="og:type" content="website" />
+    <title>Правообладателям | AniManga.SU — Авторские права</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #111827;
+            --bg-card: #1e293b;
+            --bg-card-hover: #263449;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #0ea5e9;
+            --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
+            --border-color: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        body { font-family: 'Nunito', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.7; min-height: 100vh; }
+        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .header { background: rgba(11,17,32,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.3rem; }
+        .logo-mark { width: 38px; height: 38px; background: var(--accent-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+        .logo-text { letter-spacing: -0.3px; }
+        .accent { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; transition: all 0.2s; font-family: 'Rubik', sans-serif; }
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-card); }
+        .nav-link.active { color: white; background: var(--accent-gradient); box-shadow: 0 2px 8px rgba(124,58,237,0.35); }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-wrapper svg { position: absolute; left: 12px; color: var(--text-muted); }
+        .search-input { padding: 10px 38px 10px 38px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; width: 260px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+        .search-input:focus { border-color: var(--accent-primary); }
+        .search-input::placeholder { color: var(--text-muted); }
+        .kbd-k { position: absolute; right: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; color: var(--text-muted); }
+        .btn-signin { padding: 10px 20px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Rubik', sans-serif; transition: all 0.2s; }
+        .btn-signin:hover { background: var(--accent-primary); border-color: var(--accent-primary); }
+        .theme-toggle { padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .theme-toggle:hover { background: var(--bg-card-hover); }
+        .hero { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); padding: 55px 0 45px; border-bottom: 1px solid var(--border-color); }
+        .hero h1 { font-size: 2.4rem; font-weight: 800; letter-spacing: -0.7px; margin-bottom: 12px; }
+        .hero .tagline { color: var(--text-secondary); font-size: 1.05rem; max-width: 720px; }
+        .breadcrumbs { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px; }
+        .breadcrumbs a { color: var(--accent-secondary); text-decoration: none; }
+        .content { padding: 45px 0; }
+        .doc-body { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 44px; }
+        .doc-body section { margin-bottom: 36px; scroll-margin-top: 90px; }
+        .doc-body section:last-child { margin-bottom: 0; }
+        .doc-body h2 { font-size: 1.55rem; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px; }
+        .doc-body h3 { font-size: 1.15rem; margin: 20px 0 10px; color: var(--text-primary); }
+        .doc-body p { color: var(--text-secondary); margin-bottom: 12px; font-size: 0.97rem; }
+        .doc-body p strong { color: var(--text-primary); }
+        .doc-body ul, .doc-body ol { color: var(--text-secondary); margin: 14px 0 14px 24px; }
+        .doc-body li { margin-bottom: 8px; font-size: 0.95rem; }
+        .notice-box {
+            padding: 22px 26px; background: rgba(239, 68, 68, 0.08);
+            border-left: 5px solid var(--danger); border-radius: 0 10px 10px 0;
+            margin: 18px 0;
+        }
+        .notice-box.ok {
+            background: rgba(16, 185, 129, 0.08);
+            border-left-color: var(--success);
+        }
+        .notice-box.info {
+            background: rgba(14, 165, 233, 0.08);
+            border-left-color: var(--accent-secondary);
+        }
+        .contact-mail {
+            display: inline-block; padding: 10px 22px; background: var(--accent-gradient);
+            color: white; text-decoration: none; border-radius: 10px; font-weight: 700;
+            font-family: 'Rubik', sans-serif; margin: 6px 0; transition: transform 0.2s;
+        }
+        .contact-mail:hover { transform: translateY(-1px); box-shadow: 0 8px 20px rgba(124,58,237,0.35); }
+        .contact-form { margin-top: 20px; background: var(--bg-secondary); padding: 28px; border-radius: 14px; border: 1px solid var(--border-color); }
+        .contact-form h3 { margin-top: 0; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 18px; }
+        .form-full { grid-column: 1 / -1; }
+        .field label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 7px; text-transform: uppercase; letter-spacing: 0.3px; }
+        .field input, .field textarea {
+            width: 100%; padding: 12px 14px; background: var(--bg-card); border: 1px solid var(--border-color);
+            border-radius: 10px; color: var(--text-primary); font-family: 'Nunito', sans-serif; font-size: 0.95rem;
+            outline: none; transition: border-color 0.2s;
+        }
+        .field input:focus, .field textarea:focus { border-color: var(--accent-primary); }
+        .field textarea { min-height: 140px; resize: vertical; }
+        .field input::placeholder, .field textarea::placeholder { color: var(--text-muted); }
+        .submit-btn {
+            margin-top: 20px; padding: 14px 32px; background: var(--accent-gradient); border: none;
+            color: white; border-radius: 10px; font-weight: 700; font-size: 1rem; cursor: pointer;
+            font-family: 'Rubik', sans-serif; transition: all 0.2s;
+        }
+        .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(124,58,237,0.4); }
+        .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 20px 0; }
+        .step { background: var(--bg-secondary); padding: 18px; border-radius: 12px; border: 1px solid var(--border-color); position: relative; }
+        .step .num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent-gradient); display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; margin-bottom: 10px; font-family: 'Rubik', sans-serif; }
+        .step h4 { font-size: 0.95rem; margin-bottom: 6px; }
+        .step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.5; }
+        .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 60px 0 30px; margin-top: 40px; }
+        .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        .footer-inner h5 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+        .footer-inner ul { list-style: none; }
+        .footer-inner ul li { margin-bottom: 10px; }
+        .footer-inner ul li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-inner ul li a:hover { color: var(--accent-secondary); }
+        .footer-desc { color: var(--text-secondary); font-size: 0.9rem; margin-top: 14px; line-height: 1.6; max-width: 340px; }
+        .mb { margin-bottom: 12px; }
+        .socials { display: flex; gap: 10px; margin-top: 18px; }
+        .socials a { padding: 8px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; }
+        .socials a:hover { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--text-muted); font-size: 0.85rem; }
+        .ping { color: var(--success); font-weight: 700; }
+        @media (max-width: 1024px) {
+            .nav.desktop { display: none; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .timeline { grid-template-columns: repeat(2, 1fr); }
+            .form-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.8rem; }
+            .search-input { width: 160px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+            .doc-body { padding: 24px; }
+            .timeline { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">AM</span>
+            <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+        </a>
+        <nav class="nav desktop">
+            <a href="projects.html" class="nav-link">Каталог</a>
+            <a href="schedule.html" class="nav-link">Расписание</a>
+            <a href="manga.html" class="nav-link">Манга</a>
+            <a href="about.html" class="nav-link">О проекте</a>
+        </nav>
+        <div class="header-right">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input type="text" placeholder="Поиск..." class="search-input" />
+                <kbd class="kbd-k">⌘K</kbd>
+            </div>
+            <button class="btn-signin">Войти</button>
+            <button class="theme-toggle" title="Тема">🌙</button>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="breadcrumbs"><a href="index.html">Главная</a> / Правообладателям</div>
+        <h1>⚖️ Правообладателям</h1>
+        <p class="tagline">AniManga.SU уважает права интеллектуальной собственности. Мы за честное партнёрство и быстро рассматриваем все обращения по авторским правам.</p>
+    </div>
+</section>
+
+<div class="container content">
+    <article class="doc-body">
+        <section id="intro">
+            <h2>📌 Наша позиция по авторским правам</h2>
+            <p>Администрация портала AniManga.SU уважает права интеллектуальной собственности всех правообладателей, действующих на территории Российской Федерации, стран СНГ и всего мира. Мы осознаём важность защиты авторских и смежных прав и создаём все необходимые условия для их соблюдения.</p>
+            <div class="notice-box info">
+                <p style="margin:0;color:var(--text-primary);font-weight:600;"><strong>Важно:</strong> материалы, размещённые на сайте, предоставлены исключительно в ознакомительных, образовательных и информационных целях. Все права на тайтлы, обложки, изображения, названия, символы и торговые марки принадлежат их законным правообладателям.</p>
+            </div>
+            <p>Если вы являетесь правообладателем произведения (или его официальным представителем), размещённого на сайте, и считаете, что ваши права нарушены — пожалуйста, воспользуйтесь процедурой уведомления, описанной ниже. Мы рассматриваем <strong>все</strong> поступившие обращения в порядке очереди.</p>
+        </section>
+
+        <section id="process">
+            <h2>🔄 Процедура уведомления: 4 шага</h2>
+            <p>Чтобы мы могли быстро и точно обработать запрос, пожалуйста, следуйте этой простой схеме:</p>
+            <div class="timeline">
+                <div class="step"><div class="num">1</div><h4>Отправьте уведомление</h4><p>Напишите нам на email с приложением всех доказательств. Шаблон ниже.</p></div>
+                <div class="step"><div class="num">2</div><h4>Регистрация заявки</h4><p>Мы регистрируем обращение и отправляем номер заявки в ответном письме.</p></div>
+                <div class="step"><div class="num">3</div><h4>Рассмотрение 24 ч</h4><p>Юрист проверяет факты, сверяет доказательства и принимает решение.</p></div>
+                <div class="step"><div class="num">4</div><h4>Уведомление о результате</h4><p>Мы отправляем отчёт: контент удалён, частично отредактирован или оставлен.</p></div>
+            </div>
+            <div class="notice-box ok">
+                <p style="margin:0;"><strong>Максимальный срок рассмотрения заявки — 24 часа</strong> в рабочие дни. В выходные и праздничные — до первого рабочего дня. При наличии неопровержимых доказательств спорный контент блокируется предварительно, до полного завершения проверки.</p>
+            </div>
+        </section>
+
+        <section id="what-to-send">
+            <h2>📨 Что указать в уведомлении</h2>
+            <p>Чтобы избежать отказа в рассмотрении или запроса дополнительных данных, пожалуйста, включите в письмо на <a href="mailto:copyright@animanga.su">copyright@animanga.su</a> следующую информацию:</p>
+            <ol>
+                <li><strong>Полное наименование правообладателя</strong> (физического или юридического лица), страна регистрации, ИНН/ОГРН при наличии.</li>
+                <li><strong>Контактные данные</strong> уполномоченного представителя: ФИО, должность, рабочий телефон, адрес электронной почты, корпоративный сайт компании-правообладателя.</li>
+                <li><strong>Прямые ссылки (URL)</strong> на страницы сайта AniManga.SU, на которых, по вашему мнению, размещены материалы, нарушающие авторские права. Одна ссылка — одна строка. <em>Не отправляйте скриншоты без ссылок</em>.</li>
+                <li><strong>Доказательства владения правами</strong> — любые из нижеперечисленных (достаточно одного надёжного):
+                    <ul>
+                        <li>Свидетельство о государственной регистрации исключительных прав;</li>
+                        <li>Лицензионное соглашение или договор на распространение;</li>
+                        <li>Доверенность от первоначального правообладателя с правом подачи уведомлений третьим лицам;</li>
+                        <li>Официальный договор с анимационной студией / издательством / автором;</li>
+                        <li>Скан письма с корпоративного домена правообладателя, подтверждающий ваши полномочия.</li>
+                    </ul>
+                </li>
+                <li><strong>Подпись уполномоченного представителя</strong> — цифровая (ЭЦП), скан собственноручной, или электронная подпись в формате «ФИО + должность + дата» в конце письма (приравнивается к простой электронной подписи согласно ФЗ-63 «Об электронной подписи»).</li>
+                <li><strong>Согласие со встречным уведомлением</strong> — информация о том, что вы согласны с порядком получения контрударов от пользователей, загрузивших оспариваемый материал.</li>
+            </ol>
+            <div class="notice-box">
+                <p style="margin:0;"><strong>⚠️ Внимание:</strong> сознательно ложные заявления о нарушении авторских прав могут преследоваться по закону (ст. 128.1 УК РФ — Клевета, ст. 306 УК РФ — Заведомо ложный донос). Все входящие уведомления регистрируются и архивируются.</p>
+            </div>
+        </section>
+
+        <section id="contact-now">
+            <h2>📮 Отправить уведомление сейчас</h2>
+            <p>Дублируйте информацию в форму ниже, если неудобно писать письмо. В любом случае рассмотрение начинается после регистрации обращения на email:</p>
+            <p style="text-align:center;"><a class="contact-mail" href="mailto:copyright@animanga.su">📧 copyright@animanga.su</a></p>
+            <form class="contact-form" onsubmit="event.preventDefault(); alert('Форма обратной связи отправлена! Мы свяжемся с вами в течение 24 часов.');">
+                <h3>Форма быстрого обращения</h3>
+                <div class="form-grid">
+                    <div class="field">
+                        <label>Ваше имя / Представитель</label>
+                        <input type="text" required placeholder="Иванов Иван Иванович" />
+                    </div>
+                    <div class="field">
+                        <label>Компания / Правообладатель</label>
+                        <input type="text" placeholder="ООО «Лицензиар-Медиа»" />
+                    </div>
+                    <div class="field form-full">
+                        <label>Email для ответа</label>
+                        <input type="email" required placeholder="legal@yourcompany.ru" />
+                    </div>
+                    <div class="field form-full">
+                        <label>Ссылки на страницы с нарушением (каждая с новой строки)</label>
+                        <textarea required placeholder="https://animanga.su/projects/example-title&#10;https://animanga.su/projects/anime-123"></textarea>
+                    </div>
+                    <div class="field form-full">
+                        <label>Сообщение · Описание нарушения · Доказательства</label>
+                        <textarea required placeholder="Опишите, какие именно права нарушены. Приложите ссылки на официальные источники, свидетельства, лицензии."></textarea>
+                    </div>
+                    <div class="field form-full" style="display:flex;align-items:center;gap:10px;">
+                        <input type="checkbox" required id="confirm" />
+                        <label for="confirm" style="text-transform:none;margin:0;font-size:0.88rem;color:var(--text-secondary);">Я подтверждаю, что являюсь правообладателем или его официальным представителем. Информация в обращении достоверна.</label>
+                    </div>
+                    <div class="field form-full">
+                        <button class="submit-btn" type="submit">✉️ Отправить обращение</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+
+        <section id="partnership">
+            <h2>🤝 Официальное партнёрство</h2>
+            <p>Мы не только соблюдаем законы об авторском праве, но и <strong>приветствуем официальное партнёрство и интеграцию</strong> с правообладателями, лицензиарами, дистрибьюторами, анимационными студиями и издательствами манги. Возможные форматы сотрудничества:</p>
+            <ul>
+                <li><strong>Лицензионное размещение</strong> тайтлов с монетизацией или без — вы предоставляете материалы, мы предоставляем аудиторию и инфраструктуру.</li>
+                <li><strong>Партнёрские промо-кампании</strong> — баннеры, статьи, совместные конкурсы, анонсы новых лицензий.</li>
+                <li><strong>Интеграции с маркетплейсами</strong> Blu-ray, официальной мерчем, тиражами манги и ранобэ.</li>
+                <li><strong>Геоблокирование и управление правами</strong> по вашему запросу на любую территорию.</li>
+                <li><strong>Белые списки</strong> для официальных партнеров с приоритетной поддержкой.</li>
+            </ul>
+            <p>Для обсуждения партнёрства напишите нам на почту отдела по работе с партнёрами:</p>
+            <p style="text-align:center;"><a class="contact-mail" href="mailto:partners@animanga.su">🤝 partners@animanga.su</a></p>
+        </section>
+
+        <section id="counter">
+            <h2>⚖️ Встречное уведомление (контрудар)</h2>
+            <p>Если вы — пользователь или автор, чей материал был удалён по заявке правообладателя, но вы считаете удаление ошибочным — вы вправе отправить встречное уведомление. В нём нужно указать:</p>
+            <ol>
+                <li>Ваши контактные данные и ссылки на удалённые материалы (и копию предыдущего ответа от нас с номером заявки).</li>
+                <li>Подробные обоснования, почему вы считаете удаление неправомерным (ваши авторские права, лицензия, свободная лицензия и т. п.).</li>
+                <li>Согласие на принятие юридической ответственности за содержание встречного уведомления.</li>
+            </ol>
+            <p>После получения контрада мы можем временно восстановить материал, а спор будет разрешён уже напрямую между вами и первоначальным заявителем в внесудебном или судебном порядке. Контрудары отправляются на тот же адрес <strong>copyright@animanga.su</strong> с пометкой «Встречное уведомление № [номер заявки]» в теме письма.</p>
+        </section>
+    </article>
+</div>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div>
+            <div class="logo mb">
+                <span class="logo-mark">AM</span>
+                <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+            </div>
+            <p class="footer-desc">© 2019–2026 AniManga.SU. Все права на тайтлы и материалы принадлежат их правообладателям. Сайт носит исключительно информационный характер.</p>
+            <div class="socials">
+                <a href="https://t.me/animangasu" title="Telegram">✈️ TG</a>
+                <a href="https://discord.gg/animangasu" title="Discord">💬 DS</a>
+                <a href="https://vk.com/animangasu" title="VK">🐶 VK</a>
+                <a href="https://youtube.com/@animangasu" title="YouTube">▶️ YT</a>
+            </div>
+        </div>
+        <div>
+            <h5>Разделы</h5>
+            <ul>
+                <li><a href="projects.html">Каталог аниме</a></li>
+                <li><a href="manga.html">Манга и ранобэ</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="projects.html#top">Топы и рейтинги</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Проекты</h5>
+            <ul>
+                <li><a href="projects.html#season2026">Сезон 2026</a></li>
+                <li><a href="projects.html#top100">Топ 100 аниме</a></li>
+                <li><a href="manga.html#popular">Популярная манга</a></li>
+                <li><a href="schedule.html#today">Сегодня в эфире</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Инфо</h5>
+            <ul>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="copyright.html">Правообладателям</a></li>
+                <li><a href="tos.html">Пользовательское соглашение</a></li>
+                <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                <li><a href="mailto:support@animanga.su">Поддержка: support@animanga.su</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer-bottom">
+            <span>🖥️ Серверы распределены: MSK · SPB · KZN · KGD · EKB</span>
+            <span>Ping до вашего CDN: <b class="ping">12 мс</b></span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

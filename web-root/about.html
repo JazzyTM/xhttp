@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="О проекте AniManga.SU — независимый русскоязычный портал о японской анимации и манге. Работаем с 2018 года. Команда, миссия, контакты." />
+    <meta name="keywords" content="о проекте, AniManga, команда, миссия, контакты редакции, редакция animanga.su" />
+    <meta name="theme-color" content="#0b1120" />
+    <meta property="og:title" content="О проекте | AniManga.SU" />
+    <meta property="og:description" content="AniManga.SU — независимый русскоязычный портал о японской анимации и манге с 2018 года." />
+    <meta property="og:image" content="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=anime%20studio%20office%20team%20creative%20japanese&image_size=landscape_16_9" />
+    <meta property="og:type" content="website" />
+    <title>О проекте AniManga.SU — Наша миссия и команда</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #111827;
+            --bg-card: #1e293b;
+            --bg-card-hover: #263449;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #0ea5e9;
+            --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
+            --border-color: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        body { font-family: 'Nunito', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.7; min-height: 100vh; }
+        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: rgba(11,17,32,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.3rem; }
+        .logo-mark { width: 38px; height: 38px; background: var(--accent-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+        .logo-text { letter-spacing: -0.3px; }
+        .accent { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; transition: all 0.2s; font-family: 'Rubik', sans-serif; }
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-card); }
+        .nav-link.active { color: white; background: var(--accent-gradient); box-shadow: 0 2px 8px rgba(124,58,237,0.35); }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-wrapper svg { position: absolute; left: 12px; color: var(--text-muted); }
+        .search-input { padding: 10px 38px 10px 38px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; width: 260px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+        .search-input:focus { border-color: var(--accent-primary); }
+        .search-input::placeholder { color: var(--text-muted); }
+        .kbd-k { position: absolute; right: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; color: var(--text-muted); }
+        .btn-signin { padding: 10px 20px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Rubik', sans-serif; transition: all 0.2s; }
+        .btn-signin:hover { background: var(--accent-primary); border-color: var(--accent-primary); }
+        .theme-toggle { padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .theme-toggle:hover { background: var(--bg-card-hover); }
+        .hero { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); padding: 60px 0 50px; border-bottom: 1px solid var(--border-color); }
+        .hero h1 { font-size: 2.6rem; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 14px; }
+        .hero .tagline { color: var(--text-secondary); font-size: 1.1rem; max-width: 720px; }
+        .breadcrumbs { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 18px; }
+        .breadcrumbs a { color: var(--accent-secondary); text-decoration: none; }
+        .content { padding: 50px 0; }
+        .doc-layout { display: grid; grid-template-columns: 260px 1fr; gap: 40px; }
+        .doc-nav { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; height: fit-content; position: sticky; top: 100px; }
+        .doc-nav h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 14px; }
+        .doc-nav a { display: block; padding: 10px 12px; color: var(--text-secondary); text-decoration: none; border-radius: 8px; font-size: 0.9rem; font-weight: 600; transition: all 0.15s; margin-bottom: 3px; }
+        .doc-nav a:hover { color: var(--text-primary); background: var(--bg-secondary); }
+        .doc-nav a.active { background: rgba(124,58,237,0.15); color: var(--accent-primary); }
+        .doc-body { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 40px; }
+        .doc-body section { margin-bottom: 40px; scroll-margin-top: 90px; }
+        .doc-body section:last-child { margin-bottom: 0; }
+        .doc-body h2 { font-size: 1.65rem; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 10px; }
+        .doc-body h3 { font-size: 1.2rem; margin: 20px 0 12px; }
+        .doc-body p { color: var(--text-secondary); margin-bottom: 14px; font-size: 0.98rem; }
+        .doc-body p strong { color: var(--text-primary); }
+        .about-lead { font-size: 1.15rem !important; line-height: 1.8; padding: 20px 24px; background: rgba(124,58,237,0.08); border-left: 4px solid var(--accent-primary); border-radius: 0 10px 10px 0; color: var(--text-primary) !important; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 28px 0; }
+        .stat-box { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; text-align: center; }
+        .stat-box .num { font-size: 2rem; font-weight: 800; font-family: 'Rubik', sans-serif; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .stat-box .lbl { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; font-weight: 600; }
+        .principles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+        .principle { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; transition: all 0.2s; }
+        .principle:hover { border-color: var(--accent-primary); transform: translateY(-2px); }
+        .principle .ico { font-size: 2rem; margin-bottom: 10px; }
+        .principle h4 { font-size: 1.05rem; margin-bottom: 8px; }
+        .principle p { font-size: 0.88rem; color: var(--text-secondary); }
+        .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
+        .member { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; text-align: center; }
+        .avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-gradient); margin: 0 auto 12px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; color: white; }
+        .member .name { font-weight: 700; font-size: 1rem; }
+        .member .role { font-size: 0.82rem; color: var(--accent-secondary); font-weight: 600; margin-top: 4px; }
+        .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; }
+        .contact-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 22px; }
+        .contact-card .ico { font-size: 1.8rem; margin-bottom: 10px; }
+        .contact-card h4 { font-size: 1rem; margin-bottom: 6px; }
+        .contact-card a { color: var(--accent-secondary); text-decoration: none; font-weight: 700; font-size: 0.92rem; word-break: break-all; }
+        .contact-card a:hover { text-decoration: underline; }
+        .contact-card .hint { font-size: 0.82rem; color: var(--text-muted); margin-top: 6px; }
+        .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 60px 0 30px; margin-top: 40px; }
+        .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; }
+        .footer-inner h5 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+        .footer-inner ul { list-style: none; }
+        .footer-inner ul li { margin-bottom: 10px; }
+        .footer-inner ul li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-inner ul li a:hover { color: var(--accent-secondary); }
+        .footer-desc { color: var(--text-secondary); font-size: 0.9rem; margin-top: 14px; line-height: 1.6; max-width: 340px; }
+        .mb { margin-bottom: 12px; }
+        .socials { display: flex; gap: 10px; margin-top: 18px; }
+        .socials a { padding: 8px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; }
+        .socials a:hover { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--text-muted); font-size: 0.85rem; }
+        .ping { color: var(--success); font-weight: 700; }
+        @media (max-width: 1024px) {
+            .doc-layout { grid-template-columns: 1fr; }
+            .doc-nav { position: static; }
+            .nav.desktop { display: none; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .stats-grid, .principles-grid, .team-grid, .contact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 640px) {
+            .page-title { font-size: 1.8rem; }
+            .search-input { width: 160px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+            .doc-body { padding: 24px; }
+            .stats-grid, .principles-grid, .team-grid, .contact-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">AM</span>
+            <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+        </a>
+        <nav class="nav desktop">
+            <a href="projects.html" class="nav-link">Каталог</a>
+            <a href="schedule.html" class="nav-link">Расписание</a>
+            <a href="manga.html" class="nav-link">Манга</a>
+            <a href="about.html" class="nav-link active">О проекте</a>
+        </nav>
+        <div class="header-right">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input type="text" placeholder="Поиск..." class="search-input" />
+                <kbd class="kbd-k">⌘K</kbd>
+            </div>
+            <button class="btn-signin">Войти</button>
+            <button class="theme-toggle" title="Тема">🌙</button>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="breadcrumbs"><a href="index.html">Главная</a> / О проекте</div>
+        <h1>💫 О проекте AniManga.SU</h1>
+        <p class="tagline">Независимый русскоязычный портал о японской анимации, манге и азиатской поп-культуре. Работаем с любовью с 2018 года.</p>
+    </div>
+</section>
+
+<div class="container content">
+    <div class="doc-layout">
+        <aside class="doc-nav">
+            <h4>Разделы</h4>
+            <a href="#mission" class="active">🎯 Миссия</a>
+            <a href="#stats">📊 Статистика</a>
+            <a href="#principles">🌟 Принципы</a>
+            <a href="#team">👥 Команда</a>
+            <a href="#contacts">📮 Контакты</a>
+        </aside>
+
+        <article class="doc-body">
+            <section id="mission">
+                <h2>🎯 Наша миссия</h2>
+                <p class="about-lead">AniManga.SU — независимый русскоязычный портал о японской анимации и манге. Мы любим и ценим культуру Страны Восходящего Солнца с 2018 года. Наша миссия: сделать качественный легальный доступ к тайтлам для всех жителей СНГ с русским дубляжом и профессиональными субтитрами.</p>
+                <p>Мы считаем, что аниме и манга — это не просто развлечение, а полноценное искусство, способное трогать сердца, учить эмпатии и вдохновлять на творчество. За годы работы мы превратились из маленького блога двух энтузиастов в один из крупнейших русскоязычных порталов о японской поп-культуре.</p>
+                <p><strong>Наша главная ценность — аудитория.</strong> Мы никогда не ставим коммерческие интересы выше удобства зрителей. Не показываем рекламу перед сериями, не встраиваем трекеры в плеер, не заставляем регистрироваться для просмотра. Каждый житель России, Беларуси, Казахстана, Украины, Узбекистана, Киргизии, Таджикистана, Туркменистана и других стран СНГ получает одинаково быстрый и бесплатный доступ к библиотеке.</p>
+                <p>Сервисы AniManga.SU работают в образовательных и информационных целях. Мы поддерживаем индустрию и призываем всех зрителей, если есть возможность, покупать официальные релизы, Blu-ray и мерч у лицензиаров. Это позволяет студиям выпускать ещё больше качественных тайтлов.</p>
+            </section>
+
+            <section id="stats">
+                <h2>📊 Цифры проекта</h2>
+                <p>За 8 лет работы мы собрали одну из крупнейших баз тайтлов в рунете. Вот несколько цифр, которыми гордимся:</p>
+                <div class="stats-grid">
+                    <div class="stat-box"><div class="num">18 472</div><div class="lbl">Тайтлов в каталоге</div></div>
+                    <div class="stat-box"><div class="num">~3.2M</div><div class="lbl">Зрителей в месяц</div></div>
+                    <div class="stat-box"><div class="num">8</div><div class="lbl">Лет на рынке</div></div>
+                    <div class="stat-box"><div class="num">0 ₽</div><div class="lbl">Стоимость доступа</div></div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-box"><div class="num">5</div><div class="lbl">Городов серверов</div></div>
+                    <div class="stat-box"><div class="num">1080p</div><div class="lbl">Максимальное качество</div></div>
+                    <div class="stat-box"><div class="num">24/7</div><div class="lbl">Поддержка сайта</div></div>
+                    <div class="stat-box"><div class="num">9.2</div><div class="lbl">Средняя оценка</div></div>
+                </div>
+            </section>
+
+            <section id="principles">
+                <h2>🌟 Принципы работы</h2>
+                <p>Все наши действия подчиняются трём базовым принципам, которые не меняются с 2018 года:</p>
+                <div class="principles-grid">
+                    <div class="principle">
+                        <div class="ico">🎁</div>
+                        <h4>Бесплатный доступ</h4>
+                        <p>Весь каталог доступен без регистрации и платной подписки. Никаких скрытых платежей, trial-периодов и пейволлов.</p>
+                    </div>
+                    <div class="principle">
+                        <div class="ico">🚫</div>
+                        <h4>Без рекламы</h4>
+                        <p>Мы не зарабатываем на показе рекламы. Никаких пре-, mid- и post-roll роликов. Никаких всплывающих окон и редиректов.</p>
+                    </div>
+                    <div class="principle">
+                        <div class="ico">🛡️</div>
+                        <h4>Приватность зрителя</h4>
+                        <p>Не собираем лишних персональных данных, не передаём информацию третьим лицам. Вы не «товар».</p>
+                    </div>
+                    <div class="principle">
+                        <div class="ico">⚡</div>
+                        <h4>Быстрый CDN</h4>
+                        <p>5 точек присутствия в России обеспечивают пинг до 15 мс из любого города. Резервные мощности в случае пиков.</p>
+                    </div>
+                    <div class="principle">
+                        <div class="ico">🎙️</div>
+                        <h4>Качественный перевод</h4>
+                        <p>Только проверенные студии дубляжа и профессиональные команды переводчиков. Никаких машинных субтитров.</p>
+                    </div>
+                    <div class="principle">
+                        <div class="ico">🤝</div>
+                        <h4>Открытость</h4>
+                        <p>Всегда на связи с правообладателями, переводчиками и зрителями. Любой вопрос получает ответ в течение суток.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="team">
+                <h2>👥 Команда</h2>
+                <p>AniManga.SU создаёт небольшая, но очень дружная команда профессионалов. Каждый участник — фанат культуры и вкладывает душу в проект. На данный момент в ядро редакции входят:</p>
+                <div class="team-grid">
+                    <div class="member"><div class="avatar">A</div><div class="name">Алексей К.</div><div class="role">Главный редактор</div></div>
+                    <div class="member"><div class="avatar">М</div><div class="name">Марина В.</div><div class="role">Редактор каталога</div></div>
+                    <div class="member"><div class="avatar">Д</div><div class="name">Дмитрий П.</div><div class="role">Редактор каталога</div></div>
+                    <div class="member"><div class="avatar">С</div><div class="name">Сергей Р.</div><div class="role">Редактор каталога</div></div>
+                    <div class="member"><div class="avatar">К</div><div class="name">Катя Л.</div><div class="role">Переводчик JP → RU</div></div>
+                    <div class="member"><div class="avatar">И</div><div class="name">Илья М.</div><div class="role">Переводчик EN → RU</div></div>
+                    <div class="member"><div class="avatar">Н</div><div class="name">Настя Щ.</div><div class="role">Саб-редактор</div></div>
+                    <div class="member"><div class="avatar">+</div><div class="name">SMM-отдел</div><div class="role">3 специалиста</div></div>
+                </div>
+                <p style="margin-top:24px;">...а также более 30 волонтёров по всему СНГ: модераторы, релиз-группы, тестеры и переводчики фанатских команд, которые помогают проекту оставаться таким же классным.</p>
+            </section>
+
+            <section id="contacts">
+                <h2>📮 Связь с командой</h2>
+                <p>Мы всегда рады обратной связи, вопросам партнёрства, предложениям по каталогу и жалобам на ошибки. Выберите подходящий канал:</p>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <div class="ico">📝</div>
+                        <h4>Редакция и контент</h4>
+                        <a href="mailto:editorial@animanga.su">editorial@animanga.su</a>
+                        <p class="hint">Вопросы по тайтлам, пожелания в каталог, ошибки в описании</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="ico">🤝</div>
+                        <h4>Партнёрство и реклама</h4>
+                        <a href="mailto:partners@animanga.su">partners@animanga.su</a>
+                        <p class="hint">Официальное партнёрство, интеграции, промо-кампании</p>
+                    </div>
+                    <div class="contact-card">
+                        <div class="ico">🛟</div>
+                        <h4>Поддержка пользователей</h4>
+                        <a href="mailto:support@animanga.su">support@animanga.su</a>
+                        <p class="hint">Технические проблемы, плеер, доступ, аккаунт</p>
+                    </div>
+                </div>
+            </section>
+        </article>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div>
+            <div class="logo mb">
+                <span class="logo-mark">AM</span>
+                <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+            </div>
+            <p class="footer-desc">© 2019–2026 AniManga.SU. Все права на тайтлы и материалы принадлежат их правообладателям. Сайт носит исключительно информационный характер.</p>
+            <div class="socials">
+                <a href="https://t.me/animangasu" title="Telegram">✈️ TG</a>
+                <a href="https://discord.gg/animangasu" title="Discord">💬 DS</a>
+                <a href="https://vk.com/animangasu" title="VK">🐶 VK</a>
+                <a href="https://youtube.com/@animangasu" title="YouTube">▶️ YT</a>
+            </div>
+        </div>
+        <div>
+            <h5>Разделы</h5>
+            <ul>
+                <li><a href="projects.html">Каталог аниме</a></li>
+                <li><a href="manga.html">Манга и ранобэ</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="projects.html#top">Топы и рейтинги</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Проекты</h5>
+            <ul>
+                <li><a href="projects.html#season2026">Сезон 2026</a></li>
+                <li><a href="projects.html#top100">Топ 100 аниме</a></li>
+                <li><a href="manga.html#popular">Популярная манга</a></li>
+                <li><a href="schedule.html#today">Сегодня в эфире</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Инфо</h5>
+            <ul>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="copyright.html">Правообладателям</a></li>
+                <li><a href="tos.html">Пользовательское соглашение</a></li>
+                <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                <li><a href="mailto:support@animanga.su">Поддержка: support@animanga.su</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <div class="footer-bottom">
+            <span>🖥️ Серверы распределены: MSK · SPB · KZN · KGD · EKB</span>
+            <span>Ping до вашего CDN: <b class="ping">12 мс</b></span>
+        </div>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

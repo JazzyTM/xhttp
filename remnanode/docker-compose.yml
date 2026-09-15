@@ -1,0 +1,32 @@
+services:
+  remnanode:
+    container_name: remnanode-animanga
+    hostname: animanga-node-07
+    image: remnawave/node:latest
+    network_mode: host
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    ulimits:
+      nofile:
+        soft: 1048576
+        hard: 1048576
+    environment:
+      - NODE_PORT=2223
+      - SECRET_KEY=PASTE_REMNAWAVE_SECRET_KEY_HERE
+      - TZ=Europe/Moscow
+      - LOG_LEVEL=info
+    volumes:
+      - /var/log/remnanode:/var/log/remnanode
+      - /opt/remnanode/data:/opt/remnanode/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:2223/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    labels:
+      - "project=animanga-su-cdn"
+      - "role=cdn-origin-node"
+      - "node=RU-MSK-07"

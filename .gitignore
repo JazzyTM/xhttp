@@ -1,0 +1,45 @@
+# ===============================
+#  AniManga.SU — Origin + CDN deploy Git
+#  ===============================
+
+# СЕКРЕТЫ И СОСТОЯНИЕ — НИКОГДА НЕ В ГИТ!
+state/
+*.env
+*.secret
+*.key
+*.p12
+*.pfx
+# Let's Encrypt приватные ключи (если положили случайно)
+privkey.pem
+
+# ================
+# ВРЕМЕННЫЕ ФАЙЛЫ
+# ================
+tmp/
+temp/
+*.log
+*.bak
+*.backup
+*.old
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# ================
+# РЕДАКТОРЫ / IDE
+# ================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ================
+# ПАКЕТНЫЕ МЕНЕДЖЕРЫ (на всякий)
+# ================
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/

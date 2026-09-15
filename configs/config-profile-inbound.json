@@ -1,0 +1,95 @@
+{
+  "log": {
+    "loglevel": "info"
+  },
+  "inbounds": [
+    {
+      "tag": "vkcdn-germany",
+      "port": 5448,
+      "listen": "127.0.0.1",
+      "protocol": "vless",
+      "settings": {
+        "clients": [],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "xhttp",
+        "security": "none",
+        "xhttpSettings": {
+          "mode": "packet-up",
+          "path": "/cdn/v3/media/hls/fragments",
+          "extra": {
+            "xmux": {
+              "cMaxReuseTimes": 1200,
+              "maxConcurrency": "24-48",
+              "maxConnections": 0,
+              "hKeepAlivePeriod": 30000,
+              "hMaxRequestTimes": "600-900",
+              "hMaxReusableSecs": "1800-3000"
+            },
+            "noSSEHeader": true,
+            "xPaddingKey": "fragment_sha",
+            "xPaddingHeader": "X-Media-Fragment-ID",
+            "xPaddingMethod": "tokenish",
+            "uplinkHTTPMethod": "GET",
+            "xPaddingObfsMode": true,
+            "xPaddingPlacement": "queryInHeader",
+            "scMaxBufferedPosts": 36,
+            "scMaxEachPostBytes": "1052672-2105344",
+            "scMinPostsIntervalMs": 20
+          }
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "UseIPv4"
+      },
+      "streamSettings": {
+        "sockopt": {
+          "tcpMaxSeg": 1440,
+          "tcpFastOpen": true,
+          "tcpCongestion": "bbr",
+          "tcpKeepAliveIdle": 60,
+          "tcpKeepAliveInterval": 15
+        }
+      }
+    },
+    {
+      "tag": "block",
+      "protocol": "blackhole"
+    }
+  ],
+  "routing": {
+    "rules": [
+      {
+        "ip": [
+          "geoip:private"
+        ],
+        "type": "field",
+        "outboundTag": "block"
+      }
+    ],
+    "domainStrategy": "IPIfNonMatch"
+  },
+  "policy": {
+    "levels": {
+      "0": {
+        "statsUserOnline": true,
+        "statsUserUplink": true,
+        "statsUserDownlink": true
+      }
+    },
+    "system": {
+      "statsInboundUplink": true,
+      "statsOutboundUplink": true,
+      "statsInboundDownlink": true,
+      "statsOutboundDownlink": true
+    }
+  },
+  "stats": {}
+}

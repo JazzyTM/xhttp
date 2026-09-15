@@ -1,0 +1,22 @@
+{
+  "mode": "packet-up",
+  "path": "/cdn/v3/media/hls/fragments",
+  "uplinkHTTPMethod": "GET",
+  "noSSEHeader": true,
+  "xPaddingKey": "fragment_sha",
+  "xPaddingHeader": "X-Media-Fragment-ID",
+  "xPaddingMethod": "tokenish",
+  "xPaddingObfsMode": true,
+  "xPaddingPlacement": "queryInHeader",
+  "scMaxBufferedPosts": 36,
+  "scMaxEachPostBytes": "1052672-2105344",
+  "scMinPostsIntervalMs": 20,
+  "xmux": {
+    "cMaxReuseTimes": 1200,
+    "maxConcurrency": "24-48",
+    "maxConnections": 0,
+    "hKeepAlivePeriod": 30000,
+    "hMaxRequestTimes": "600-900",
+    "hMaxReusableSecs": "1800-3000"
+  }
+}

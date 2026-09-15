@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Пользовательское соглашение AniManga.SU — правила использования портала, регистрации, подписки, ответственность сторон. Последнее обновление: 15 сентября 2026 г." />
+    <meta name="keywords" content="пользовательское соглашение, условия использования, terms of service, правила сайта, лицензионное соглашение animanga" />
+    <meta name="theme-color" content="#0b1120" />
+    <meta property="og:title" content="Пользовательское соглашение | AniManga.SU" />
+    <meta property="og:description" content="Правила использования портала AniManga.SU, права и обязанности пользователей, ответственность сторон, форс-мажор." />
+    <meta property="og:image" content="https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=legal%20contract%20document%20sign%20stamp%20agreement&image_size=landscape_16_9" />
+    <meta property="og:type" content="website" />
+    <title>Пользовательское соглашение | AniManga.SU</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+        :root {
+            --bg-primary: #0b1120;
+            --bg-secondary: #111827;
+            --bg-card: #1e293b;
+            --bg-card-hover: #263449;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --accent-primary: #7c3aed;
+            --accent-secondary: #0ea5e9;
+            --accent-gradient: linear-gradient(135deg, #7c3aed 0%, #0ea5e9 100%);
+            --border-color: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        body { font-family: 'Nunito', sans-serif; background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.75; min-height: 100vh; }
+        h1, h2, h3, h4, h5 { font-family: 'Rubik', sans-serif; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .header { background: rgba(11,17,32,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100; }
+        .header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; gap: 24px; }
+        .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text-primary); font-weight: 800; font-size: 1.3rem; }
+        .logo-mark { width: 38px; height: 38px; background: var(--accent-gradient); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: 800; font-size: 0.95rem; box-shadow: 0 4px 12px rgba(124,58,237,0.3); }
+        .logo-text { letter-spacing: -0.3px; }
+        .accent { background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .nav { display: flex; gap: 4px; }
+        .nav-link { color: var(--text-secondary); text-decoration: none; padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 0.92rem; transition: all 0.2s; font-family: 'Rubik', sans-serif; }
+        .nav-link:hover { color: var(--text-primary); background: var(--bg-card); }
+        .nav-link.active { color: white; background: var(--accent-gradient); box-shadow: 0 2px 8px rgba(124,58,237,0.35); }
+        .header-right { display: flex; align-items: center; gap: 12px; }
+        .search-wrapper { position: relative; display: flex; align-items: center; }
+        .search-wrapper svg { position: absolute; left: 12px; color: var(--text-muted); }
+        .search-input { padding: 10px 38px 10px 38px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; color: var(--text-primary); outline: none; width: 260px; font-size: 0.9rem; font-family: 'Nunito', sans-serif; }
+        .search-input:focus { border-color: var(--accent-primary); }
+        .search-input::placeholder { color: var(--text-muted); }
+        .kbd-k { position: absolute; right: 10px; background: var(--bg-secondary); border: 1px solid var(--border-color); padding: 2px 6px; border-radius: 5px; font-size: 0.7rem; color: var(--text-muted); }
+        .btn-signin { padding: 10px 20px; background: var(--bg-card); color: var(--text-primary); border: 1px solid var(--border-color); border-radius: 8px; font-weight: 700; font-size: 0.9rem; cursor: pointer; font-family: 'Rubik', sans-serif; transition: all 0.2s; }
+        .btn-signin:hover { background: var(--accent-primary); border-color: var(--accent-primary); }
+        .theme-toggle { padding: 10px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-size: 1rem; }
+        .theme-toggle:hover { background: var(--bg-card-hover); }
+        .hero { background: linear-gradient(180deg, var(--bg-secondary) 0%, var(--bg-primary) 100%); padding: 50px 0 40px; border-bottom: 1px solid var(--border-color); }
+        .hero h1 { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.7px; margin-bottom: 10px; }
+        .hero .meta { color: var(--text-muted); font-size: 0.9rem; }
+        .breadcrumbs { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 16px; }
+        .breadcrumbs a { color: var(--accent-secondary); text-decoration: none; }
+        .content { padding: 40px 0 60px; }
+        .toc { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 22px 26px; margin-bottom: 32px; }
+        .toc h4 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 14px; }
+        .toc ol { columns: 2; column-gap: 30px; padding-left: 20px; }
+        .toc li { margin-bottom: 7px; break-inside: avoid; }
+        .toc a { color: var(--accent-secondary); text-decoration: none; font-weight: 600; font-size: 0.93rem; }
+        .toc a:hover { text-decoration: underline; }
+        .doc-body { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 44px; }
+        .doc-body .chapter { margin-bottom: 40px; scroll-margin-top: 90px; }
+        .doc-body .chapter:last-child { margin-bottom: 0; }
+        .doc-body h2 { font-size: 1.5rem; margin: 0 0 18px; padding-bottom: 12px; border-bottom: 2px solid var(--accent-primary); display: inline-block; }
+        .doc-body h3 { font-size: 1.05rem; margin: 22px 0 10px; color: var(--text-primary); }
+        .doc-body p { color: var(--text-secondary); margin-bottom: 12px; font-size: 0.96rem; text-align: justify; }
+        .doc-body p strong { color: var(--text-primary); }
+        .doc-body ul, .doc-body ol { color: var(--text-secondary); margin: 12px 0 12px 24px; }
+        .doc-body li { margin-bottom: 7px; font-size: 0.94rem; }
+        .ch-num { display:inline-block; min-width:32px; height:32px; border-radius:8px; background: var(--accent-gradient); color: white; font-weight:800; font-size:0.9rem; margin-right:10px; vertical-align: middle; text-align:center; line-height:32px; }
+        .highlight-box { padding: 18px 22px; background: rgba(124,58,237,0.08); border-left: 4px solid var(--accent-primary); border-radius: 0 10px 10px 0; margin: 16px 0; }
+        .highlight-box.danger { background: rgba(239,68,68,0.08); border-left-color: var(--danger); }
+        .highlight-box.ok { background: rgba(16,185,129,0.08); border-left-color: var(--success); }
+        .legal-info { margin-top: 40px; padding-top: 28px; border-top: 2px dashed var(--border-color); font-size: 0.88rem; color: var(--text-muted); }
+        .legal-info p { color: var(--text-muted); margin-bottom: 6px; font-size: 0.88rem; }
+        .footer { background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 60px 0 30px; margin-top: 40px; }
+        .footer-inner { display: grid; grid-template-columns: 2fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 40px; max-width: 1400px; margin-left: auto; margin-right: auto; padding: 0 20px; }
+        .footer-inner h5 { font-size: 1rem; font-weight: 700; margin-bottom: 18px; }
+        .footer-inner ul { list-style: none; }
+        .footer-inner ul li { margin-bottom: 10px; }
+        .footer-inner ul li a { color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: color 0.2s; }
+        .footer-inner ul li a:hover { color: var(--accent-secondary); }
+        .footer-desc { color: var(--text-secondary); font-size: 0.9rem; margin-top: 14px; line-height: 1.6; max-width: 340px; }
+        .mb { margin-bottom: 12px; }
+        .socials { display: flex; gap: 10px; margin-top: 18px; }
+        .socials a { padding: 8px 12px; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; }
+        .socials a:hover { background: var(--accent-primary); color: white; border-color: var(--accent-primary); }
+        .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; color: var(--text-muted); font-size: 0.85rem; max-width: 1400px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+        .ping { color: var(--success); font-weight: 700; }
+        @media (max-width: 1024px) {
+            .nav.desktop { display: none; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .toc ol { columns: 1; }
+        }
+        @media (max-width: 640px) {
+            .hero h1 { font-size: 1.7rem; }
+            .search-input { width: 160px; }
+            .footer-inner { grid-template-columns: 1fr; }
+            .header-inner { flex-wrap: wrap; }
+            .doc-body { padding: 22px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="index.html" class="logo">
+            <span class="logo-mark">AM</span>
+            <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+        </a>
+        <nav class="nav desktop">
+            <a href="projects.html" class="nav-link">Каталог</a>
+            <a href="schedule.html" class="nav-link">Расписание</a>
+            <a href="manga.html" class="nav-link">Манга</a>
+            <a href="about.html" class="nav-link">О проекте</a>
+        </nav>
+        <div class="header-right">
+            <div class="search-wrapper">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+                <input type="text" placeholder="Поиск..." class="search-input" />
+                <kbd class="kbd-k">⌘K</kbd>
+            </div>
+            <button class="btn-signin">Войти</button>
+            <button class="theme-toggle" title="Тема">🌙</button>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container">
+        <div class="breadcrumbs"><a href="index.html">Главная</a> / Пользовательское соглашение</div>
+        <h1>📜 Пользовательское соглашение</h1>
+        <p class="meta">Публичная оферта (договор) на использование интернет-портала. Последняя редакция: 15 сентября 2026 г. (версия 7.3)</p>
+    </div>
+</section>
+
+<div class="container content">
+    <nav class="toc">
+        <h4>Содержание соглашения</h4>
+        <ol>
+            <li><a href="#ch1">Термины и определения</a></li>
+            <li><a href="#ch2">Предмет соглашения</a></li>
+            <li><a href="#ch3">Регистрация и аккаунт</a></li>
+            <li><a href="#ch4">Правила поведения на сайте</a></li>
+            <li><a href="#ch5">Контент и интеллектуальные права</a></li>
+            <li><a href="#ch6">Подписки и оплата</a></li>
+            <li><a href="#ch7">Ответственность сторон</a></li>
+            <li><a href="#ch8">Форс-мажор и прочие положения</a></li>
+        </ol>
+    </nav>
+
+    <article class="doc-body">
+        <section class="chapter" id="ch1">
+            <h2><span class="ch-num">1</span> Термины и определения</h2>
+            <p>Для целей настоящего Пользовательского соглашения (далее — «Соглашение») нижеприведённые термины используются в следующем значении:</p>
+            <p><strong>1.1. «Администрация», «мы», «наш», «правообладатель Сайта»</strong> — АniManga.SU (самоназвание), виртуальная проекция некоммерческого объединения физических лиц, предоставляющая доступ к Сайту и Сервисам. Операции осуществляются в соответствии с законодательством Российской Федерации.</p>
+            <p><strong>1.2. «Пользователь», «вы», «ваш»</strong> — физическое или юридическое лицо, осуществившее акцепт (принятие условий) данного Соглашения путём регистрации, использования Сайта без регистрации или любого другого фактического использования сервисов.</p>
+            <p><strong>1.3. «Сайт», «Портал»</strong> — совокупность программно-аппаратных средств, баз данных, текстов, изображений, аудио- и видеоматериалов, объединённых общим дизайном и структурой, расположенная в сети Интернет под доменным именем animanga.su и его поддоменами (www., m., api. и т. д.).</p>
+            <p><strong>1.4. «Сервис», «Услуга»</strong> — любая из предоставляемых на Сайте возможностей: просмотр аудиовизуальных произведений, чтение графических и текстовых произведений, регистрация профиля, списки избранного, комментирование, подписка на рассылки, онлайн-плеер, мобильные приложения и т. д.</p>
+            <p><strong>1.5. «Контент»</strong> — любые охраняемые результаты интеллектуальной деятельности и средства индивидуализации, размещённые на Сайте: тайтлы (аниме, манга, ранобэ), обложки, кадры, трейлеры, озвучки, субтитры, статьи, отзывы, комментарии, пользовательские публикации, базы данных, программный код.</p>
+            <p><strong>1.6. «Пользовательский контент»</strong> — контент, созданный и/или размещённый на Сайте непосредственно Пользователем, включая: комментарии, отзывы, оценки, списки избранного, рецензии, аватары, публичные сообщения, скриншоты.</p>
+            <p><strong>1.7. «Регистрация»</strong> — процедура создания аккаунта (учётной записи) Пользователя на Сайте посредством заполнения формы и аутентификации. Может быть не обязательной для получения базовых Сервисов.</p>
+            <p><strong>1.8. «Подписка», «Премиум-аккаунт»</strong> — платная расширенная версия Сервиса (если и когда будет введена), предоставляемая на ограниченный срок при внесении платы в порядке, установленном Соглашением.</p>
+            <p><strong>1.9. «Личные данные»</strong> — персональная информация, которую Пользователь предоставляет сам при регистрации или в процессе использования Сервисов. Обработка регулируется отдельной Политикой конфиденциальности.</p>
+            <p><strong>1.10. «Стороны»</strong> — Пользователь и Администрация Сайта, являющиеся сторонами правоотношений по настоящему Соглашению.</p>
+        </section>
+
+        <section class="chapter" id="ch2">
+            <h2><span class="ch-num">2</span> Предмет соглашения</h2>
+            <p><strong>2.1.</strong> Предметом настоящего Соглашения является предоставление Администрацией Пользователю доступа к Сайту и его Сервисам на условиях бесплатного (или платного, в случае введения Подписки) пользования, а также определение прав, обязанностей, порядка взаимодействия и ответственности Сторон.</p>
+            <p><strong>2.2.</strong> Настоящее Соглашение является публичной офертой в смысле ст. 437 Гражданского кодекса РФ. Факт начала использования Сайта (даже без регистрации) считается полным и безоговорочным принятием (акцептом) всех его условий.</p>
+            <p><strong>2.3.</strong> Если вы не согласны с любым из пунктов Соглашения — пожалуйста, немедленно прекратите использование Сайта и удалите все сохранённые локальные копии материалов.</p>
+            <p><strong>2.4.</strong> Мы оставляем за собой право в любое время по своему усмотрению изменять, дополнять или обновлять положения Соглашения. Актуальная редакция всегда доступна по URL: animanga.su/tos.html. Продолжение пользования Сервисами после публикации изменений автоматически согласуется с их принятием.</p>
+            <p><strong>2.5.</strong> Соглашение вступает в силу для каждого конкретного Пользователя с момента первого фактического доступа к Сайту или любому из Сервисов. Для зарегистрированных Пользователей — с момента подтверждения регистрации (клика «Зарегистрироваться» / аналогичная кнопка).</p>
+            <div class="highlight-box">
+                <p style="margin:0;"><strong>Юрисдикция:</strong> по всем вопросам, не урегулированным данным Соглашением, применяется право Российской Федерации. Споры разрешаются в порядке искового производства по месту нахождения Администрации.</p>
+            </div>
+        </section>
+
+        <section class="chapter" id="ch3">
+            <h2><span class="ch-num">3</span> Регистрация. Учётная запись</h2>
+            <p><strong>3.1.</strong> Базовые Сервисы Сайта (просмотр контента, поиск, чтение манги) могут быть доступны без регистрации. Часть расширенных возможностей (списки избранного, история просмотров, оценки, комментарии, синхронизация между устройствами) требует создания учётной записи.</p>
+            <p><strong>3.2.</strong> При регистрации Пользователь обязуется предоставлять точные, полные и актуальные данные: действующий адрес электронной почты, логин, никнейм. Запрещается использовать чужие данные, почтовые ящики третьих лиц без их разрешения, регистрировать аккаунты от имени юридического лица без права представления.</p>
+            <p><strong>3.3.</strong> Пользователь несёт <strong>исключительную ответственность</strong> за сохранность логина и пароля. Любые действия, произведённые под его учётной записью (в том числе несанкционированные), считаются совершёнными самим Пользователем, если он не доказал обратное в установленном законом порядке.</p>
+            <p><strong>3.4.</strong> В случае утечки данных или подозрения на несанкционированный доступ Пользователь обязан немедленно уведомить Администрацию по email <a href="mailto:support@animanga.su" style="color:var(--accent-secondary);">support@animanga.su</a> и сменить пароль.</p>
+            <p><strong>3.5.</strong> Каждый Пользователь вправе зарегистрировать не более <strong>одной</strong> основной учётной записи. Создание «мультиаккаунтов» для обхода ограничений, накрутки рейтингов, голосования, манипуляций с комментариями запрещено и является основанием для блокировки всех связанных аккаунтов.</p>
+            <p><strong>3.6.</strong> Администрация вправе по своему усмотрению и без объяснения причин (но с уведомлением по email при наличии) приостановить или окончательно заблокировать аккаунт в случаях: нарушения Соглашения, подозрения в мошенничестве, создания угрозы стабильности Сервиса, получения массовых жалоб от других Пользователей.</p>
+            <p><strong>3.7.</strong> Пользователь вправе в любое время запросить удаление своего аккаунта и всех связанных с ним персональных данных в соответствии с Политикой конфиденциальности и применимым законодательством.</p>
+        </section>
+
+        <section class="chapter" id="ch4">
+            <h2><span class="ch-num">4</span> Правила поведения на Сайте</h2>
+            <p><strong>4.1.</strong> Используя Сайт и Сервисы, Пользователь обязуется соблюдать:</p>
+            <ul>
+                <li>условия настоящего Соглашения и Политики конфиденциальности;</li>
+                <li>действующее законодательство Российской Федерации и страны проживания Пользователя;</li>
+                <li>общепринятые нормы морали и этики;</li>
+                <li>правила хорошего тона при общении с другими Пользователями и представителями Администрации.</li>
+            </ul>
+            <p><strong>4.2. ЗАПРЕЩЕНО:</strong></p>
+            <ul>
+                <li>размещать, распространять или пропагандировать любые материалы, противоречащие законодательству РФ: разжигающие рознь, расизм, ксенофобию, ненависть, дискриминацию, содержащие угрозы, унижения, клевету, призывы к насилию или суициду, материалы порнографического характера;</li>
+                <li>вовлекать несовершеннолетних в любые противоправные схемы, распространять вредоносные ссылки, фишинговые ресурсы, рекламные бот-схемы;</li>
+                <li>взламывать, сканировать уязвимости, перегружать Сайт (DDoS), парсить базы данных в коммерческих целях, автоматизировать просмотр без разрешения Администрации;</li>
+                <li>вскрывать, декомпилировать, пытаться получить исходный код программных решений Сайта, воспроизводить и распространять серверные наработки;</li>
+                <li>использовать Сервисы для массовой рассылки спама, рекламы сторонних проектов, реферальных ссылок, пиринг-ресурсов, сторонних стриминговых платформ;</li>
+                <li>создавать помехи работе других Пользователей: флудить, троллить, манипулировать общественным мнением, доносить заведомо ложные сведения о модерации;</li>
+                <li>имитировать представителей Администрации, модераторов, официальных лиц, использовать фирменный стиль и торговые знаки проекта без разрешения;</li>
+                <li>намеренно искажать оценочные механизмы: накручивать рейтинги, голосовать с мультиаккаунтов, организовывать «войны оценок»;</li>
+                <li>собирать персональные данные других Пользователей без их явного согласия.</li>
+            </ul>
+            <p><strong>4.3.</strong> Администрация вправе (но не обязана) проводить модерацию Пользовательского контента. Модератор может удалить или отредактировать любое сообщение без предварительного уведомления, если оно нарушает правила. Решение модерации может быть обжаловано путём письма на support с указанием номера комментария.</p>
+            <p><strong>4.4.</strong> Пользователь, обнаруживший нарушения правил третьими лицами, должен сообщить о них через форму жалобы на странице материала или по email.</p>
+        </section>
+
+        <section class="chapter" id="ch5">
+            <h2><span class="ch-num">5</span> Контент сайта. Интеллектуальные права</h2>
+            <p><strong>5.1.</strong> Весь оригинальный Контент Сайта (за исключением тайтлов-works и пользовательских публикаций), включая: оригинальный дизайн, фирменный логотип AniManga.SU, структуру навигации, подборки, описания к тайтлам, авторские статьи, — являются объектами исключительных прав Администрации или её лицензиаров и охраняются в соответствии с ч. IV ГК РФ и международными конвенциями.</p>
+            <p><strong>5.2.</strong> Контент, представляющий собой аудиовизуальные и графические произведения (анимационные сериалы, фильмы, манга, ранобэ, обложки, кадры, саундтреки, озвучки, субтитры и т. п.) размещён на Сайте <strong>исключительно в ознакомительных целях</strong> в порядке ст. 1274 ГК РФ. Все права на такие произведения принадлежат их законным правообладателям: студиям, издательствам, авторам, официальным лицензиарам.</p>
+            <p><strong>5.3.</strong> Просмотр, чтение, воспроизведение материалов доступны исключительно в пределах личного некоммерческого использования. <strong>Запрещено</strong> любое дальнейшее воспроизведение, копирование, распространение, публичный показ, загрузка на сторонние ресурсы, переработка, создание производных произведений без предварительного письменного согласия соответствующего правообладателя.</p>
+            <p><strong>5.4.</strong> Размещая Пользовательский контент (комментарии, отзывы, рецензии и т. п.), Пользователь:</p>
+            <ul>
+                <li>гарантирует, что он является обладателем всех необходимых прав на его публикацию;</li>
+                <li>предоставляет Администрации <strong>бессрочную, безвозмездную, неисключительную, глобальную лицензию</strong> на использование контента в любых рекламных, маркетинговых и операционных целях, связанных с работой Сайта, с правом на переработку, адаптацию, включение в подборки, перевод на другие языки;</li>
+                <li>несёт личную ответственность за содержание публикаций и любые последствия их размещения.</li>
+            </ul>
+            <p><strong>5.5.</strong> Если вы являетесь правообладателем любого из произведений, размещённых на Сайте, и считаете, что ваши права нарушены — пожалуйста, используйте специальную процедуру на странице <a href="copyright.html" style="color:var(--accent-secondary);">Правообладателям</a>.</p>
+            <div class="highlight-box danger">
+                <p style="margin:0;"><strong>Важно:</strong> Администрация не несёт ответственности за возможные последствия просмотра Контента для здоровья, психики, нравственных устоев Пользователя. Рекомендуется ориентироваться на возрастные рейтинги, указанные рядом с каждым тайтлом (6+, 12+, 16+, 18+).</p>
+            </div>
+        </section>
+
+        <section class="chapter" id="ch6">
+            <h2><span class="ch-num">6</span> Подписки и оплата (Платные функции)</h2>
+            <p><strong>6.1.</strong> На момент последней редакции Соглашения (сентябрь 2026 г.) базовый Сервис Сайта предоставляется Пользователям <strong>абсолютно бесплатно</strong>. Никакие скрытые платежи, пробные периоды, автоматические списания, SMS-подписки не предусмотрены.</p>
+            <p><strong>6.2.</strong> Администрация оставляет за собой право в одностороннем порядке в любой момент ввести (или не вводить) <strong>Премиум-подписку</strong> (платные функции), которые расширяют возможности базового Сервиса. Возможные платные функции (если появятся):</p>
+            <ul>
+                <li>повышенное качество стриминга (1080p Blu-ray, 2160p 4K HDR) без ограничений по скорости;</li>
+                <li>синхронизация между неограниченным количеством устройств, расширенная история просмотров;</li>
+                <li>ранний доступ к новинкам (премиера за 24–48 часов до бесплатного показа);</li>
+                <li>эксклюзивные бонусные материалы: интервью, арты, making-of, OVA, спешлы;</li>
+                <li>отключение любых информационных уведомлений о новинках;</li>
+                <li>приоритетная поддержка и доступ в закрытый Discord-сервер.</li>
+            </ul>
+            <p><strong>6.3.</strong> В случае введения Подписки её стоимость, сроки, методы оплаты (банковские карты, электронные кошельки, криптовалюты по закону), порядок возврата средств публикуются на отдельной странице Сайта и становятся неотъемлемой частью Соглашения.</p>
+            <p><strong>6.4.</strong> Подписка возобновляется автоматически только при наличии явного согласия Пользователя (опция «Автопродление»). Отказаться от автопродления можно в любой момент в настройках аккаунта или письмом на support@animanga.su не позднее, чем за 48 часов до даты следующего списания.</p>
+            <p><strong>6.5.</strong> Возврат средств за полностью или частично неиспользованный период Подписки осуществляется по письменному запросу в течение 14 календарных дней с момента оплаты для резидентов РФ (Закон о защите прав потребителей) и в разумные сроки для остальных юрисдикций. Возврат не производится, если Пользователь получил доступ к эксклюзивному контенту или средства Сервиса были фактически использованы по назначению.</p>
+            <p><strong>6.6.</strong> Все платежи обрабатываются внешним платёжным провайдером (PCI-DSS сертифицирован). Администрация никогда не запрашивает и не хранит полные реквизиты банковских карт на своих серверах.</p>
+            <div class="highlight-box ok">
+                <p style="margin:0;">Вне зависимости от возможного появления платных функций, бесплатная редакция Сервиса всегда будет включать базовый просмотр каталога и чтение манги в стандартном качестве.</p>
+            </div>
+        </section>
+
+        <section class="chapter" id="ch7">
+            <h2><span class="ch-num">7</span> Ответственность сторон</h2>
+            <p><strong>7.1.</strong> Пользователь несёт личную ответственность:</p>
+            <ul>
+                <li>за все совершённые им под своей учётной записью действия и последствия таких действий;</li>
+                <li>за достоверность предоставляемых персональных данных и законность размещаемого Пользовательского контента;</li>
+                <li>за нарушение прав третьих лиц (включая, но не ограничиваясь авторскими и смежными правами, правом на защиту чести и достоинства, прав на неприкосновенность частной жизни).</li>
+            </ul>
+            <p><strong>7.2.</strong> Пользователь обязуется возместить Администрации, её сотрудникам, аффилированным лицам убытки, причинённые вследствие любых его нарушений: расходы на юристов, штрафы от регуляторов, репутационные потери, возмещение исков третьих лиц — в полном объёме по правилам ст. 15, 1064 ГК РФ.</p>
+            <p><strong>7.3.</strong> Сайт и Сервисы предоставляются Администрацией по принципу «как есть» («AS IS»). Администрация не даёт никаких явных или подразумеваемых гарантий:</p>
+            <ul>
+                <li>бесперебойной, безошибочной работы Сервиса 24/7;</li>
+                <li>соответствия доступного Контента ожиданиям Пользователя;</li>
+                <li>доступности Сайта в конкретной юрисдикции или с конкретного IP-адреса;</li>
+                <li>отсутствия технических сбоев, ошибок кэша, возможностей перерыва трансляции из-за форс-мажора.</li>
+            </ul>
+            <p><strong>7.4.</strong> Администрация не несёт ответственности за:</p>
+            <ul>
+                <li>убытки, возникшие в результате невозможности использования Сервиса, задержек, сбоев, ошибок передачи данных, потери информации;</li>
+                <li>действия или бездействие интернет-провайдеров, мобильных операторов, облачных хостеров, платёжных систем;</li>
+                <li>действия Пользователей по размещению Пользовательского контента; модерация является прерогативой Администрации, но не её обязанностью;</li>
+                <li>финансовые или репутационные потери, возникшие в результате использования (или невозможности использования) любого из Сервисов.</li>
+            </ul>
+            <p><strong>7.5.</strong> Совокупный размер ответственности Администрации по любым искам и претензиям, связанным с предметом Соглашения, <strong>ограничивается суммой</strong>, эквивалентной 1 (Одному) минимальному размеру оплаты труда (МРОТ), установленному на территории РФ на дату возникновения претензии, или фактически уплаченной Пользователем суммой за Подписку за последний отчётный период — в зависимости от того, какая из величин больше.</p>
+        </section>
+
+        <section class="chapter" id="ch8">
+            <h2><span class="ch-num">8</span> Форс-мажор и прочие положения</h2>
+            <p><strong>8.1. Форс-мажор.</strong> Стороны освобождаются от ответственности за частичное или полное неисполнение обязательств по Соглашению, если явится, что это неисполнение явилось следствием непреодолимой силы: стихийных бедствий (землетрясения, наводнения, пожары, эпидемии, пандемии, карантины), военных действий, террористических актов, массовых беспорядков, забастовок, актов и распоряжений органов государственной власти, санкций третьих стран, глобальных сбоев инфраструктуры Интернета, выхода из строя крупных облачных провайдеров и других событий, которые Стороны не могли ни предвидеть, ни предотвратить разумными мерами.</p>
+            <p><strong>8.2. Срок действия.</strong> Соглашение вступает в силу для Пользователя с момента акцепта и действует бессрочно, пока любая из Сторон не пожелает его расторгнуть в порядке нижеуказанном.</p>
+            <p><strong>8.3. Расторжение Соглашения.</strong></p>
+            <ul>
+                <li><strong>По инициативе Пользователя:</strong> простое прекращение использования Сайта и/или письмо на support с просьбой удалить аккаунт.</li>
+                <li><strong>По инициативе Администрации:</strong> односторонний отказ с уведомлением по email в случае грубого или неоднократного нарушения Пользователем условий Соглашения, решений регуляторов, требования государственных органов.</li>
+            </ul>
+            <p>Расторжение Соглашения не освобождает Стороны от ответственности за нарушения, допущенные в период его действия.</p>
+            <p><strong>8.4. Конфиденциальность.</strong> Стороны обязуются не разглашать и не передавать третьим лицам ставшие им известными в процессе исполнения Соглашения коммерческие и личные данные друг друга, за исключением случаев, прямо предусмотренных законодательством РФ и Политикой конфиденциальности.</p>
+            <p><strong>8.5. Применимое право и разрешение споров.</strong> Все правоотношения по Соглашению регулируются материальным правом Российской Федерации. Споры, не урегулированные путём переговоров, подлежат разрешению в судебном порядке по месту нахождения Администрации. Пользователь, не согласный с таким положением, должен немедленно прекратить использование Сервиса.</p>
+            <p><strong>8.6. Частичная недействительность.</strong> Если какая-либо из глав или положений Соглашения по решению суда будет признана полностью или частично недействительной, это не влияет на действительность остальных положений, которые продолжают применяться в полном объёме.</p>
+            <p><strong>8.7. Уведомления.</strong> Все юридически значимые уведомления от Администрации направляются Пользователю по email, указанному при регистрации. Сообщения считаются полученными по истечении 24 часов с момента отправки. Уведомления от Пользователя следует отправлять по адресам, указанным на странице «О проекте» и «Правообладателям».</p>
+            <p><strong>8.8. Язык Соглашения.</strong> Оригинальный текст документа составлен на русском языке. Переводы на другие языки носят исключительно справочный характер.</p>
+            <p><strong>8.9. Пожертвования.</strong> Администрация может принимать добровольные пожертвования (донаты) от Пользователей на развитие проекта. Пожертвование не является оплатой Сервиса и не порождает права на Подписку, если это не было явно указано на странице пожертвования.</p>
+            <p><strong>8.10. Нематериальные права.</strong> Название «AniManga.SU», фирменный логотип, графический стиль, слоганы являются средствами индивидуализации проекта. Их использование без письменного разрешения Администрации запрещено.</p>
+
+            <div class="legal-info">
+                <p><strong>Реквизиты (информационные, вымышленные в демо-целях):</strong></p>
+                <p>Самоназвание: AniManga.SU · Юридический адрес (для переписки): 121357, г. Москва, ул. Воротынская, д. 18, стр. 4, оф. 312 · ИНН/ОГРН не применяется для некоммерческого сообщества.</p>
+                <p>Оператор обработки данных: физические лица — организаторы проекта. Контакт для обращений: support@animanga.su · Юридический контакт: legal@animanga.su</p>
+                <p>Дата последнего существенного обновления: 15 сентября 2026 г. · Предыдущая версия: 3.06.2026 г.</p>
+            </div>
+        </section>
+    </article>
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div>
+            <div class="logo mb">
+                <span class="logo-mark">AM</span>
+                <span class="logo-text">Ani<span class="accent">Manga</span>.SU</span>
+            </div>
+            <p class="footer-desc">© 2019–2026 AniManga.SU. Все права на тайтлы и материалы принадлежат их правообладателям. Сайт носит исключительно информационный характер.</p>
+            <div class="socials">
+                <a href="https://t.me/animangasu" title="Telegram">✈️ TG</a>
+                <a href="https://discord.gg/animangasu" title="Discord">💬 DS</a>
+                <a href="https://vk.com/animangasu" title="VK">🐶 VK</a>
+                <a href="https://youtube.com/@animangasu" title="YouTube">▶️ YT</a>
+            </div>
+        </div>
+        <div>
+            <h5>Разделы</h5>
+            <ul>
+                <li><a href="projects.html">Каталог аниме</a></li>
+                <li><a href="manga.html">Манга и ранобэ</a></li>
+                <li><a href="schedule.html">Расписание</a></li>
+                <li><a href="projects.html#top">Топы и рейтинги</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Проекты</h5>
+            <ul>
+                <li><a href="projects.html#season2026">Сезон 2026</a></li>
+                <li><a href="projects.html#top100">Топ 100 аниме</a></li>
+                <li><a href="manga.html#popular">Популярная манга</a></li>
+                <li><a href="schedule.html#today">Сегодня в эфире</a></li>
+            </ul>
+        </div>
+        <div>
+            <h5>Инфо</h5>
+            <ul>
+                <li><a href="about.html">О проекте</a></li>
+                <li><a href="copyright.html">Правообладателям</a></li>
+                <li><a href="tos.html">Пользовательское соглашение</a></li>
+                <li><a href="privacy.html">Политика конфиденциальности</a></li>
+                <li><a href="mailto:support@animanga.su">Поддержка: support@animanga.su</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <span>🖥️ Серверы распределены: MSK · SPB · KZN · KGD · EKB</span>
+        <span>Ping до вашего CDN: <b class="ping">12 мс</b></span>
+    </div>
+</footer>
+
+<script src="js/app.js"></script>
+</body>
+</html>

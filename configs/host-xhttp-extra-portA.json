@@ -1,0 +1,21 @@
+{
+  "path": "/stream/v2/chapters/segments",
+  "uplinkHTTPMethod": "GET",
+  "noSSEHeader": true,
+  "headers": {
+    "X-Origin-Secret": "c6da03b9dbfd03c72813edb7d4791f3180a1da03f372c358"
+  },
+  "xPaddingKey": "chapter_hash",
+  "xPaddingHeader": "X-Chapter-Segment-Token",
+  "xPaddingMethod": "tokenish",
+  "xPaddingObfsMode": true,
+  "xPaddingPlacement": "queryInHeader",
+  "xmux": {
+    "cMaxReuseTimes": 800,
+    "maxConcurrency": "20-40",
+    "maxConnections": 0,
+    "hKeepAlivePeriod": 25000,
+    "hMaxRequestTimes": "500-800",
+    "hMaxReusableSecs": "2400-3600"
+  }
+}
