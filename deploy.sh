@@ -27,6 +27,8 @@ PATH_B="/cdn/v3/media/hls/fragments"          # URL-путь №2 (xhttp мос�
 ORIGIN_SECRET="c6da03b9dbfd03c72813edb7d4791f3180a1da03f372c358" # СЕКРЕТНЫЙ ТОКЕН (твой рабочий!).
                                               # Оставь пустым — скрипт сам сгенерирует и сохранит.
                                               # Если уже указан — будет использован этот.
+REMNA_NODE_PORT="2222"                        # Порт Remnanode / Warden agent / node management (WSS/gRPC).
+                                              # Оставь 2222 (стандарт remna), "" — НЕ ОТКРЫВАТЬ порт в ufw.
 # ==========================================================================
 #  КОНЕЦ БЛОКА НАСТРОЕК. ДАЛЬШЕ НИЧЕГО НЕ МЕНЯЙ.
 # ==========================================================================
@@ -140,13 +142,17 @@ else
 fi
 
 # ---------------- Открываем порты UFW (если ufw не включен — ничего не ломаем) ----------------
-step "ШАГ 3/7: Настройка ufw (открываем 22 / 80 / 443. Кастомные порты 10065/10066 — закрываем, они не нужны!)"
+step "ШАГ 3/7: Настройка ufw (открываем 22 / 80 / 443 + Remna ${REMNA_NODE_PORT}. Кастомные 10065/10066 — закрываем!)"
 # всегда закрываем кастомные порты — больше их нет в конфиге
 ufw delete allow 10065/tcp 2>/dev/null || true
 ufw delete allow 10066/tcp 2>/dev/null || true
 ufw allow 22/tcp    comment 'SSH'               2>/dev/null || true
 ufw allow 80/tcp    comment 'HTTP + ACME'       2>/dev/null || true
 ufw allow 443/tcp   comment 'HTTPS + TLS'       2>/dev/null || true
+# Remnanode / Warden agent port (обычно 2222). Если переменная пустая или 0 — не открываем.
+if [[ -n "${REMNA_NODE_PORT}" && "${REMNA_NODE_PORT}" != "0" ]]; then
+    ufw allow "${REMNA_NODE_PORT}/tcp" comment 'Remnanode / Warden node' 2>/dev/null || true
+fi
 # ufw enable только если ещё не включен
 if ufw status | head -n1 | grep -qi inactive; then
     INFO "ufw не активен — включаю (по умолчанию deny входящие)"
