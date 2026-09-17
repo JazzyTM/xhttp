@@ -160,11 +160,44 @@ if ufw status | head -n1 | grep -qi inactive; then
 fi
 ufw status numbered 2>/dev/null | head -15 || true
 
-# ---------------- Кладём сайт-заглушку AniManga.SU ----------------
+# ------------------ ОЧИСТКА СТАРЫХ NGINX-КОНФИГОВ (DO FIRST — ПЕРЕД ГЕНЕРАЦИЕЙ!) ------------------
+# ВНИМАНИЕ: ЭТОТ БЛОК ОБЯЗАТЕЛЬНО ДО GENERATE dummy-ok И ДО GENERATE MAIN NGINX CONF!
+# Иначе старые broken-файлы (с http_400, unexpected "1", другой домен) остаются
+# в sites-enabled и nginx падает при nginx -t / reload даже если новые конфиги правильные.
+INFO "🧹 Предварительно чищу ВСЕ старые nginx sites-enabled/available (до генерации!)"
+# 1) Удаляем ВСЕ по wildcard для ТЕКУЩЕГО домена (самое важное — ИСКЛЮЧАЕМ dummy-ok и конфиги прошлого!)
+rm -f "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}*" \
+      "/etc/nginx/sites-available/${ORIGIN_DOMAIN}*" 2>/dev/null || true
+# 2) Удаляем legacy animanga (из ранних версий шаблона), default, *.bak, битые
+rm -f /etc/nginx/sites-enabled/animanga \
+      /etc/nginx/sites-available/animanga \
+      /etc/nginx/sites-available/animanga-tmp \
+      /etc/nginx/sites-enabled/default \
+      /etc/nginx/sites-enabled/*.bak \
+      /etc/nginx/sites-enabled/*animanga* \
+      /etc/nginx/sites-enabled/*-dummy-ok.conf \
+      /etc/nginx/sites-available/*-dummy-ok.conf 2>/dev/null || true
+# 3) Удаляем ВСЕ sites-enabled/*.conf (кроме возможно configs shipped but usually we don't ship — SAFE: нет, не трогаем пакетные). Оставляем удаление только наших.
+# 4) Чистим битые симлинки enabled→available (target не существует)
+for stale in /etc/nginx/sites-enabled/*; do
+    if [[ -L "$stale" ]] && [[ ! -e "$stale" ]]; then
+        rm -f "$stale" 2>/dev/null || true
+    fi
+done
+INFO "✅ Старые nginx-конфиги вычищены. sites-enabled сейчас $(ls /etc/nginx/sites-enabled 2>/dev/null | wc -l) файлов"
+
 # ---------------- Кладём сайт-заглушку AniManga.SU ----------------
 step "ШАГ 4/7: ДепLOY сайта-заглушки AniManga.SU → /var/www/${ORIGIN_DOMAIN}/"
 WEBROOT_DST="/var/www/${ORIGIN_DOMAIN}"
 mkdir -p "${WEBROOT_DST}" 2>/dev/null || true
+# DEBUG: показываем что ЕСТЬ в исходной веб-рут директории — пользователи часто копируют ТОЛЬКО deploy.sh без web-root/
+SRC_HTML_N=$(find "${WEB_ROOT_SRC}" -maxdepth 1 -type f -name "*.html" 2>/dev/null | wc -l | tr -d ' ')
+SRC_LS=$(ls -A "${WEB_ROOT_SRC}" 2>/dev/null | head -15 | tr '\n' ', ')
+INFO "Исходник web-root: ${WEB_ROOT_SRC} (HTML файлов: ${SRC_HTML_N}). Содержимое: ${SRC_LS}"
+if [[ "${SRC_HTML_N}" -eq 0 ]]; then
+    WARN "⚠️  В исходной директории ${WEB_ROOT_SRC} НЕТ HTML-файлов! Это значит что ты скопировал только deploy.sh, а НЕ ВЕСЬ репо."
+    WARN "→ РЕШЕНИЕ: cd /root/animanga-cdn && git pull https://github.com/JazzyTM/xhttp.git main — и перезапусти deploy.sh"
+fi
 
 # 1) ЧИСТИМ Устаревшее: удаляем ВСЕ *.html/css/js/favicon старые (чтобы скопировать свежие!)
 #    Не удаляем .well-known/acme-challenge/ — там certbot токены могут лежать!
@@ -275,24 +308,9 @@ ln -sf "${DUMMY_OK_CONF}" "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}-dummy-ok.co
 # ---------------- Создаём главный nginx-origin.conf ----------------
 step "ШАГ 5/7: Собираю и кладу главный nginx-конфиг origin-сервера"
 
-# ВАЖНО: УДАЛЯЕМ ВСЕ СТАРЫЕ КОНФИГИ, ЧТОБЫ НИЧЕГО НЕ КОНФЛИКТОВАЛО!
-# В частности удаляем старые animanga* (с http_400), video-quality*, default и прочие
-rm -f /etc/nginx/sites-enabled/animanga \
-      /etc/nginx/sites-available/animanga \
-      /etc/nginx/sites-available/animanga-tmp \
-      /etc/nginx/sites-enabled/default \
-      /etc/nginx/sites-enabled/*.bak \
-      /etc/nginx/sites-enabled/*animanga* \
-      /etc/nginx/sites-enabled/*-dummy-ok.conf 2>/dev/null || true
-# Также чистим available — чтобы не висели неиспользуемые dummy-ok с прошлых доменов
-rm -f /etc/nginx/sites-available/*-dummy-ok.conf 2>/dev/null || true
-# Также чистим доступные (available) — чтобы не висили мёртвые симлинки enabled→available несуществующие
-for stale in /etc/nginx/sites-enabled/*; do
-    if [[ -L "$stale" ]] && [[ ! -e "$stale" ]]; then
-        rm -f "$stale" 2>/dev/null || true
-    fi
-done
-INFO "Удалены старые/устаревшие конфиги nginx (animanga, default, *.bak, битые симлинки)"
+INFO "🧹 Доочищаю остатки old/${ORIGIN_DOMAIN}-related nginx-конфиги перед генерацией (двойная защита!)"
+rm -f "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}.conf" \
+      "/etc/nginx/sites-available/${ORIGIN_DOMAIN}.conf" 2>/dev/null || true
 
 MAIN_CONF_SRC="${CONFIGS_DIR}/nginx-origin.conf"
 MAIN_CONF_DST_AVAIL="/etc/nginx/sites-available/${ORIGIN_DOMAIN}.conf"
