@@ -255,6 +255,7 @@ OK "Веб-рут лежит в ${WEBROOT_DST} (HTML=${HTML_COUNT})"
 # Создаём отдельный «внутренний» server_block, который отвечает JSON status:ok.
 # Используется, если Xray упал или вернул 4xx/5xx — чтобы CDN край не видел 502.
 mkdir -p /etc/nginx/sites-available /etc/nginx/sites-enabled 2>/dev/null || true
+NOW_TS="$(date +%s)"
 DUMMY_OK_CONF="/etc/nginx/sites-available/${ORIGIN_DOMAIN}-dummy-ok.conf"
 cat > "${DUMMY_OK_CONF}" <<NGINX_DUMMY
 server {
@@ -266,7 +267,7 @@ server {
     deny all;
 
     default_type application/json;
-    return 200 '{"status":"ok","service":"animanga-cdn-bridge","server":"${ORIGIN_DOMAIN}","node":"edge-msk-01","region":"ru-central","ts":'$(date +%s)'}';
+    return 200 '{"status":"ok","service":"animanga-cdn-bridge","server":"${ORIGIN_DOMAIN}","node":"edge-msk-01","region":"ru-central","ts":${NOW_TS}}';
 }
 NGINX_DUMMY
 ln -sf "${DUMMY_OK_CONF}" "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}-dummy-ok.conf" 2>/dev/null || true
@@ -281,7 +282,10 @@ rm -f /etc/nginx/sites-enabled/animanga \
       /etc/nginx/sites-available/animanga-tmp \
       /etc/nginx/sites-enabled/default \
       /etc/nginx/sites-enabled/*.bak \
-      /etc/nginx/sites-enabled/*animanga* 2>/dev/null || true
+      /etc/nginx/sites-enabled/*animanga* \
+      /etc/nginx/sites-enabled/*-dummy-ok.conf 2>/dev/null || true
+# Также чистим available — чтобы не висели неиспользуемые dummy-ok с прошлых доменов
+rm -f /etc/nginx/sites-available/*-dummy-ok.conf 2>/dev/null || true
 # Также чистим доступные (available) — чтобы не висили мёртвые симлинки enabled→available несуществующие
 for stale in /etc/nginx/sites-enabled/*; do
     if [[ -L "$stale" ]] && [[ ! -e "$stale" ]]; then
