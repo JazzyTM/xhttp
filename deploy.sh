@@ -18,17 +18,18 @@ umask 022
 # ==========================================================================
 #  🔧 БЛОК НАСТРОЕК — ОТРЕДАКТИРУЙ ЭТО ПЕРЕД ЗАПУСКОМ
 # ==========================================================================
-ORIGIN_DOMAIN="video-quality.animanga.su"   # origin-домен (A-запись → IP этого сервера)
-CDN_DOMAIN="video-fast.animanga.su"          # CDN-домен   (CNAME → укажи в DNS VK Cloud после деплоя)
+ORIGIN_DOMAIN="api.rf.network-itstudio.ru"   # origin-домен (A-запись → IP этого сервера)
+CDN_DOMAIN="api.v1.rf.network-itstudio.ru"          # CDN-домен   (CNAME → укажи в DNS VK Cloud после деплоя)
 XRAY_PORT="5448"                              # Локальный порт inbound'а Xray (уже должен быть запущен на 127.0.0.1)
 XRAY_DUMMY_OK_PORT="20080"                    # Внутренний порт fallback-сервера (dummy OK JSON, если Xray упадёт)
 PATH_A="/stream/v2/chapters/segments"         # URL-путь №1 (xhttp мост A) — кастомный, под заглушку манги
 PATH_B="/cdn/v3/media/hls/fragments"          # URL-путь №2 (xhttp мост B) — кастомный, под заглушку HLS CDN
-ORIGIN_SECRET="c6da03b9dbfd03c72813edb7d4791f3180a1da03f372c358" # СЕКРЕТНЫЙ ТОКЕН (твой рабочий!).
+ORIGIN_SECRET="c6da099b9dbfd03c72813edb7d4791f3180a1da03f372c358" # СЕКРЕТНЫЙ ТОКЕН (твой рабочий!).
                                               # Оставь пустым — скрипт сам сгенерирует и сохранит.
                                               # Если уже указан — будет использован этот.
 REMNA_NODE_PORT="2222"                        # Порт Remnanode / Warden agent / node management (WSS/gRPC).
                                               # Оставь 2222 (стандарт remna), "" — НЕ ОТКРЫВАТЬ порт в ufw.
+ENVOY_PORT="2053"                             # Порт, на который переносим Envoy (если он занимал :443).
 # ==========================================================================
 #  КОНЕЦ БЛОКА НАСТРОЕК. ДАЛЬШЕ НИЧЕГО НЕ МЕНЯЙ.
 # ==========================================================================
@@ -40,6 +41,54 @@ WARN()  { echo -e "  ${YELLOW}⚠️${NC}  $1"; }
 FAIL()  { echo -e "  ${RED}❌${NC} $1"; }
 INFO()  { echo -e "  ${CYAN}ℹ️${NC}  $1"; }
 step()  { echo -e "\n═══════════════════════════════════════════\n  $1\n═══════════════════════════════════════════\n"; }
+
+# ---------------- Управление Envoy (переносим с :443 на :ENVOY_PORT, чтобы nginx занял 443) ----------------
+# Envoy из Remnawave-ноды занимает :443. Переносим его на отдельный порт, nginx остаётся на 443.
+ENVOY_WAS_RUNNING=0
+stop_envoy() {
+    if systemctl is-active --quiet envoy 2>/dev/null; then
+        ENVOY_WAS_RUNNING=1
+    fi
+    # Останавливаем Envoy (освобождаем :443)
+    INFO "🛑 Останавливаю Envoy (освобождаю :443 для nginx)..."
+    systemctl stop envoy 2>/dev/null || true
+    sleep 1
+    if ss -ltnp 2>/dev/null | grep -q ':443 '; then
+        WARN ":443 всё ещё занят — пробую pkill envoy..."
+        pkill -9 envoy 2>/dev/null || true
+        sleep 1
+    fi
+    # Переносим Envoy с порта 443 на ENVOY_PORT в его конфиге
+    if [[ -f /etc/envoy/envoy.yaml ]]; then
+        _cur_envoy_port="$(grep -a 'port_value: 443' /etc/envoy/envoy.yaml 2>/dev/null | head -n1 | grep -oE '[0-9]+$')"
+        if [[ "${_cur_envoy_port}" == "443" ]]; then
+            INFO "🔧 Переношу Envoy с :443 на :${ENVOY_PORT} в /etc/envoy/envoy.yaml..."
+            sed -i 's/port_value: 443/port_value: '"${ENVOY_PORT}"'/' /etc/envoy/envoy.yaml
+            OK "Envoy конфиг обновлён → слушает :${ENVOY_PORT}"
+        else
+            INFO "Envoy уже не на :443 (видимо :${_cur_envoy_port}), перенос не требуется"
+        fi
+        unset _cur_envoy_port
+    fi
+    OK "Envoy остановлен и готов к запуску на :${ENVOY_PORT}"
+}
+start_envoy() {
+    if [[ "${ENVOY_WAS_RUNNING}" -eq 1 ]]; then
+        INFO "▶️  Запускаю Envoy на :${ENVOY_PORT}..."
+        if systemctl start envoy 2>/dev/null; then
+            sleep 1
+            if systemctl is-active --quiet envoy 2>/dev/null; then
+                OK "Envoy запущен на :${ENVOY_PORT}"
+            else
+                WARN "Envoy не смог запуститься. Проверь: systemctl status envoy"
+            fi
+        else
+            WARN "Не удалось запустить Envoy. Проверь: systemctl status envoy"
+        fi
+    fi
+}
+# Гарантируем попытку вернуть Envoy даже если скрипт упадёт
+trap 'start_envoy' EXIT
 
 SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]:-$0}"; )" &> /dev/null && pwd 2> /dev/null; echo "$PWD"; )"
 STATE_DIR="${SCRIPT_DIR}/state"
@@ -53,10 +102,15 @@ if [[ "$(id -u)" -ne 0 ]]; then
     exit 1
 fi
 
-# ---------------- чтение state.env ----------------
+# ---------------- чтение state.env (ТОЛЬКО секрет, домены НЕ перетираем!) ----------------
+# ФИКС: раньше source state.env перезаписывал ORIGIN_DOMAIN/CDN_DOMAIN старыми значениями.
+# Теперь читаем из state.env только SAVED_ORIGIN_SECRET, домены всегда берём из deploy.sh.
 if [[ -f "${STATE_DIR}/state.env" ]]; then
-    # shellcheck disable=SC1091
-    source "${STATE_DIR}/state.env"
+    _saved_secret="$(grep -a '^SAVED_ORIGIN_SECRET=' "${STATE_DIR}/state.env" 2>/dev/null | head -n1 | cut -d'"' -f2)"
+    if [[ -n "${_saved_secret}" ]]; then
+        export SAVED_ORIGIN_SECRET="${_saved_secret}"
+    fi
+    unset _saved_secret
 fi
 
 # ---------------- генерация секрета, если пустой ----------------
@@ -149,6 +203,10 @@ ufw delete allow 10066/tcp 2>/dev/null || true
 ufw allow 22/tcp    comment 'SSH'               2>/dev/null || true
 ufw allow 80/tcp    comment 'HTTP + ACME'       2>/dev/null || true
 ufw allow 443/tcp   comment 'HTTPS + TLS'       2>/dev/null || true
+# Envoy порт (если Envoy был перенесён с 443 на ENVOY_PORT)
+if [[ -n "${ENVOY_PORT}" && "${ENVOY_PORT}" != "443" ]]; then
+    ufw allow "${ENVOY_PORT}/tcp" comment "Envoy (Remnawave node, перенесён с 443)" 2>/dev/null || true
+fi
 # Remnanode / Warden agent port (обычно 2222). Если переменная пустая или 0 — не открываем.
 if [[ -n "${REMNA_NODE_PORT}" && "${REMNA_NODE_PORT}" != "0" ]]; then
     ufw allow "${REMNA_NODE_PORT}/tcp" comment 'Remnanode / Warden node' 2>/dev/null || true
@@ -162,23 +220,14 @@ ufw status numbered 2>/dev/null | head -15 || true
 
 # ------------------ ОЧИСТКА СТАРЫХ NGINX-КОНФИГОВ (DO FIRST — ПЕРЕД ГЕНЕРАЦИЕЙ!) ------------------
 # ВНИМАНИЕ: ЭТОТ БЛОК ОБЯЗАТЕЛЬНО ДО GENERATE dummy-ok И ДО GENERATE MAIN NGINX CONF!
-# Иначе старые broken-файлы (с http_400, unexpected "1", другой домен) остаются
+# Иначе старые broken-файлы (с http_400, unexpected "1", другой домен, duplicate upstream) остаются
 # в sites-enabled и nginx падает при nginx -t / reload даже если новые конфиги правильные.
 INFO "🧹 Предварительно чищу ВСЕ старые nginx sites-enabled/available (до генерации!)"
-# 1) Удаляем ВСЕ по wildcard для ТЕКУЩЕГО домена (самое важное — ИСКЛЮЧАЕМ dummy-ok и конфиги прошлого!)
-rm -f "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}*" \
-      "/etc/nginx/sites-available/${ORIGIN_DOMAIN}*" 2>/dev/null || true
-# 2) Удаляем legacy animanga (из ранних версий шаблона), default, *.bak, битые
-rm -f /etc/nginx/sites-enabled/animanga \
-      /etc/nginx/sites-available/animanga \
-      /etc/nginx/sites-available/animanga-tmp \
-      /etc/nginx/sites-enabled/default \
-      /etc/nginx/sites-enabled/*.bak \
-      /etc/nginx/sites-enabled/*animanga* \
-      /etc/nginx/sites-enabled/*-dummy-ok.conf \
-      /etc/nginx/sites-available/*-dummy-ok.conf 2>/dev/null || true
-# 3) Удаляем ВСЕ sites-enabled/*.conf (кроме возможно configs shipped but usually we don't ship — SAFE: нет, не трогаем пакетные). Оставляем удаление только наших.
-# 4) Чистим битые симлинки enabled→available (target не существует)
+# 1) УДАЛЯЕМ ВСЁ из sites-enabled и sites-available (сервер выделен под эту ноду)
+#    Это гарантирует: нет duplicate upstream, нет битых конфигов прошлых доменов.
+rm -f /etc/nginx/sites-enabled/*  2>/dev/null || true
+rm -f /etc/nginx/sites-available/* 2>/dev/null || true
+# 2) Чистим битые симлинки enabled→available (target не существует)
 for stale in /etc/nginx/sites-enabled/*; do
     if [[ -L "$stale" ]] && [[ ! -e "$stale" ]]; then
         rm -f "$stale" 2>/dev/null || true
@@ -308,6 +357,9 @@ ln -sf "${DUMMY_OK_CONF}" "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}-dummy-ok.co
 # ---------------- Создаём главный nginx-origin.conf ----------------
 step "ШАГ 5/7: Собираю и кладу главный nginx-конфиг origin-сервера"
 
+# Останавливаем Envoy если он занял :443 (чтобы nginx мог занять 443)
+stop_envoy
+
 INFO "🧹 Доочищаю остатки old/${ORIGIN_DOMAIN}-related nginx-конфиги перед генерацией (двойная защита!)"
 rm -f "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}.conf" \
       "/etc/nginx/sites-available/${ORIGIN_DOMAIN}.conf" 2>/dev/null || true
@@ -315,6 +367,17 @@ rm -f "/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}.conf" \
 MAIN_CONF_SRC="${CONFIGS_DIR}/nginx-origin.conf"
 MAIN_CONF_DST_AVAIL="/etc/nginx/sites-available/${ORIGIN_DOMAIN}.conf"
 MAIN_CONF_DST_ENABLED="/etc/nginx/sites-enabled/${ORIGIN_DOMAIN}.conf"
+
+# --- Выбор SSL-сертификата: LE если уже есть, иначе snakeoil (чтобы nginx стартовал) ---
+LE_CERT="/etc/letsencrypt/live/${ORIGIN_DOMAIN}/fullchain.pem"
+LE_KEY="/etc/letsencrypt/live/${ORIGIN_DOMAIN}/privkey.pem"
+if [[ -f "${LE_CERT}" && -f "${LE_KEY}" ]]; then
+    SSL_CERT="${LE_CERT}"
+    SSL_KEY="${LE_KEY}"
+else
+    SSL_CERT="/etc/ssl/certs/ssl-cert-snakeoil.pem"
+    SSL_KEY="/etc/ssl/private/ssl-cert-snakeoil.key"
+fi
 
 # Создание конфига «с нуля» (чтобы не зависить от прошлых правок)
 cat > "${MAIN_CONF_SRC}" <<NGINX_MAIN
@@ -369,15 +432,10 @@ server {
     error_log  /var/log/nginx/animanga-error.log warn;
 
     # ---------- TLS ----------
-    ssl_certificate     /etc/letsencrypt/live/${ORIGIN_DOMAIN}/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/${ORIGIN_DOMAIN}/privkey.pem;
+    ssl_certificate     ${SSL_CERT};
+    ssl_certificate_key ${SSL_KEY};
     include             /etc/letsencrypt/options-ssl-nginx.conf;
     ssl_dhparam         /etc/letsencrypt/ssl-dhparams.pem;
-
-    # Fallback-сертификат, если Let's Encrypt не получилось.
-    # (чтобы nginx не падал на старте)
-    ssl_certificate         /etc/ssl/certs/ssl-cert-snakeoil.pem;
-    ssl_certificate_key     /etc/ssl/private/ssl-cert-snakeoil.key;
 
     # Безопасные заголовки (маскируем, что это вообще за софт)
     server_tokens off;
@@ -407,6 +465,11 @@ server {
         proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_request_buffering off;
         proxy_buffering off;
+        proxy_cache off;
+        proxy_no_cache 1;
+        proxy_cache_bypass 1;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate" always;
+        add_header Pragma "no-cache" always;
         proxy_read_timeout 3600s;
         proxy_send_timeout 3600s;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504 non_idempotent;
@@ -432,6 +495,11 @@ server {
         proxy_set_header X-Forwarded-Proto \$scheme;
         proxy_request_buffering off;
         proxy_buffering off;
+        proxy_cache off;
+        proxy_no_cache 1;
+        proxy_cache_bypass 1;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate" always;
+        add_header Pragma "no-cache" always;
         proxy_read_timeout 3600s;
         proxy_send_timeout 3600s;
         proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504 non_idempotent;
@@ -444,14 +512,17 @@ server {
     # Веб-сайт-заглушка AniManga.SU (каталог/расписание/манга)
     # ====================================================================
     location / {
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate" always;
+        add_header Pragma "no-cache" always;
         try_files \$uri \$uri/ /index.html;
     }
 
-    # Статика с long cache
+    # Статика — КЕШ ОТКЛЮЧЁН (VK Cloud CDN кеширует сам, origin не должен кешировать)
     location ~* \.(?:css|js|svg|png|jpe?g|gif|ico|woff2?)$ {
-        expires 7d;
+        expires -1;
         access_log off;
-        add_header Cache-Control "public, immutable, max-age=604800";
+        add_header Cache-Control "no-store, no-cache, must-revalidate, proxy-revalidate" always;
+        add_header Pragma "no-cache" always;
         try_files \$uri =404;
     }
 
@@ -528,8 +599,8 @@ if [[ "${NEED_CERT}" -eq 1 ]]; then
             DEBIAN_FRONTEND=noninteractive apt install -y -q certbot python3-certbot-nginx 2>&1 | tail -5 || true
         fi
         if command -v certbot >/dev/null 2>&1; then
-            # Проверяем, что nginx слушает :80 (временно релоадим конфиг без certbot чтобы поднять :80)
-            INFO "Временно запускаю nginx на :80 для ACME challenge..."
+            # Envoy уже остановлен (stop_envoy выше), :443 свободен → nginx поднимется на 80 и 443.
+            INFO "Запускаю nginx на :80 для ACME challenge..."
             mkdir -p "${WEBROOT_DST}/.well-known/acme-challenge" 2>/dev/null || true
             nginx -t 2>&1 | tail -3 || true
             systemctl restart nginx 2>/dev/null || service nginx restart 2>/dev/null || nginx 2>/dev/null || true
@@ -543,6 +614,15 @@ if [[ "${NEED_CERT}" -eq 1 ]]; then
                 -d "${ORIGIN_DOMAIN}" 2>&1 | tail -15 || true
         fi
     fi
+fi
+
+# --- Если сертификат LE успешно получен — переключаем nginx с snakeoil на LE ---
+if [[ -f "${LE_CERT}" && -f "${LE_KEY}" && "${SSL_CERT}" != "${LE_CERT}" ]]; then
+    INFO "✅ Let's Encrypt сертификат получен! Переключаю nginx с snakeoil на LE..."
+    sed -i "s|ssl_certificate .*ssl-cert-snakeoil.pem;|ssl_certificate     ${LE_CERT};|" "${MAIN_CONF_DST_AVAIL}" 2>/dev/null || true
+    sed -i "s|ssl_certificate_key .*ssl-cert-snakeoil.key;|ssl_certificate_key ${LE_KEY};|" "${MAIN_CONF_DST_AVAIL}" 2>/dev/null || true
+    SSL_CERT="${LE_CERT}"
+    SSL_KEY="${LE_KEY}"
 fi
 
 # ---------------- Проверка синтаксиса nginx и рестарт ----------------
@@ -584,6 +664,9 @@ else
     WARN "порты 80/443 не слушаются. Проверь journalctl -u nginx или cat /var/log/nginx/error.log"
 fi
 
+# Пробуем вернуть Envoy обратно (если он был запущен). Если :443 занят nginx — Envoy не стартанёт, это OK.
+start_envoy
+
 # ---------------- Финальный state.env на будущее ----------------
 cat > "${STATE_DIR}/state.env" <<ENV
 ORIGIN_DOMAIN="${ORIGIN_DOMAIN}"
@@ -592,6 +675,7 @@ XRAY_PORT="${XRAY_PORT}"
 XRAY_DUMMY_OK_PORT="${XRAY_DUMMY_OK_PORT}"
 PATH_A="${PATH_A}"
 PATH_B="${PATH_B}"
+ENVOY_PORT="${ENVOY_PORT}"
 SAVED_ORIGIN_SECRET="${ORIGIN_SECRET}"
 MY_EXTERNAL_IP="${MY_EXTERNAL_IP}"
 DEPLOYED_AT="$(date -Iseconds)"
